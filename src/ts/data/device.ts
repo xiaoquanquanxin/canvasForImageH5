@@ -9,7 +9,7 @@ export const devicePixelRatio = (() => {
 	}
 	return ratio;
 })();
-console.log('devicePixelRatio：', devicePixelRatio);
+console.log("devicePixelRatio：", devicePixelRatio);
 //	canvas的宽高
 export const canvasWidth = window.innerWidth * devicePixelRatio;
 export const canvasHeight = window.innerHeight * devicePixelRatio;
