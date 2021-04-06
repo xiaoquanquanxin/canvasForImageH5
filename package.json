@@ -20,10 +20,10 @@
     },
     "homepage": "https://github.com/xiaoquanquanxin/canvasForImageH5#readme",
     "dependencies": {
-        "file-loader": "^6.2.0",
         "rxjs": "^6.6.7"
     },
     "devDependencies": {
+        "file-loader": "^6.2.0",
         "html-webpack-plugin": "^5.3.1",
         "ts-loader": "^8.1.0",
         "typescript": "^4.2.3",
