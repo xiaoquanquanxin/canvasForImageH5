@@ -18,7 +18,8 @@ export interface ImgItem {
 	//	斜率
 	yK?: number;
 	xK?: number;
-	init?: number;
+	initX?: number;
+	initY?: number;
 }
 
 //	图片的map

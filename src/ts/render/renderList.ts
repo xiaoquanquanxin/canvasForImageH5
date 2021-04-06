@@ -1,70 +1,98 @@
-import {canvasHeight, canvasWidth} from "@ts/data/device";
+import {canvasHeight, canvasWidth, mainRatio} from "@ts/data/device";
 import {cacheCtx} from "@ts/data/canvas";
 import {checkImgInCanvas, getImageRatio} from "@ts/utils/utils";
 import {ImgItem} from "@ts/interface/interface";
 
 //	静止的，与currentY完全匹配的
 function renderStatic(dy: number, img: HTMLImageElement) {
-	const {
-		rw,
-		rh,
-		width,
-		height,
-	} = getImageRatio(img);
-	// const ratio = canvasHeight / canvasWidth;
-	const ratio = rh / rw;
-	//	切出来这么大一份高度
-	// const height = ratio * width | 0;
-	// console.log(ratio);
-	// console.log(height);
-	console.log(dy);
+	const {width} = getImageRatio(img);
+	const ratio = canvasHeight / canvasWidth;
 	cacheCtx.drawImage(img,
 		//	img x,y,w,h
-		0, -dy, width, height,
+		0, -dy, width, width * ratio,
 		//	canvas x,y,w,h
-		0, 0, canvasWidth, ratio * canvasWidth);
+		0, 0, canvasWidth, canvasHeight);
 }
 
 //	画背景
 export function renderCover(currentY: number, imgItem: ImgItem) {
 	const {img} = imgItem;
-	document.getElementById("devicePixelRatio").innerText = (-currentY | 0).toString();
 	renderStatic(currentY, img);
 }
 
-//	cloud_01，向右
-export function renderCloud_01(currentY: number, imgItem: ImgItem) {
-	const {img} = imgItem;
+//	cloud_03，向左
+export function renderCloud_03(currentY: number, imgItem: ImgItem) {
+	const {initX, initY, yK, xK, img} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
-	const dx = canvasWidth / 6 - currentY * .3;
-	const dy = canvasHeight + canvasWidth * rh * 1.5 + currentY;
+	const dy = (initY + currentY * mainRatio) * yK;
+	const dx = (initX + currentY * mainRatio) * xK;
+	const inCanvas = checkImgInCanvas(dy, dx, width, height);
+	if (!inCanvas) {
+		return;
+	}
 	cacheCtx.drawImage(img,
 		0, 0, width, height,
 		dx, dy, canvasWidth * rw, canvasWidth * rh,
 	);
 }
 
-//	cloud_03，向左
-export function renderCloud_03(currentY: number, imgItem: ImgItem) {
-	const {img} = imgItem;
+
+//	cloud_01，向右
+export function renderCloud_01(currentY: number, imgItem: ImgItem) {
+	const {initX, initY, yK, xK, img} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
-	const dx = currentY * .3;
-	const dy = canvasHeight - canvasWidth * rh * 1.6;
+	const dy = (initY + currentY * mainRatio) * yK;
+	const dx = (initX + currentY * mainRatio) * xK;
+	const inCanvas = checkImgInCanvas(dy, dx, width, height);
+	if (!inCanvas) {
+		return;
+	}
 	cacheCtx.drawImage(img,
 		0, 0, width, height,
-		dx, dy + currentY, canvasWidth * rw, canvasWidth * rh,
+		dx, dy, canvasWidth * rw, canvasWidth * rh,
 	);
+	//
+	// const {initX, yK, xK, img} = imgItem;
+	// const {rw, rh, width, height} = getImageRatio(img);
+	// const dy = (initX - currentY) * yK;
+	// const dx = (initX + currentY) * xK;
+	// const inCanvas = checkImgInCanvas(dy, dx, width, height);
+	// cacheCtx.drawImage(img,
+	// 	0, 0, width, height,
+	// 	dx, dy, canvasWidth * rw, canvasWidth * rh,
+	// );
 }
+
 
 //	cloud_02，向左
 export function renderCloud_02(currentY: number, imgItem: ImgItem) {
-	const {img} = imgItem;
+	const {initX, initY, yK, xK, img} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
-	const dx = currentY * .2;
-	const dy = canvasHeight - canvasWidth * rh / 2;
+	const dy = (initY + currentY * mainRatio) * yK;
+	const dx = (initX + currentY * mainRatio) * xK;
+	const inCanvas = checkImgInCanvas(dy, dx, width, height);
+	if (!inCanvas) {
+		return;
+	}
 	cacheCtx.drawImage(img,
 		0, 0, width, height,
-		dx, dy + currentY, canvasWidth * rw, canvasWidth * rh,
+		dx, dy, canvasWidth * rw, canvasWidth * rh,
+	);
+}
+
+//	cloud_06，向左
+export function renderCloud_06(currentY: number, imgItem: ImgItem) {
+	const {initX, initY, yK, xK, img} = imgItem;
+	const {rw, rh, width, height} = getImageRatio(img);
+	const dy = (initY + currentY * mainRatio) * yK;
+	const dx = (initX + currentY * mainRatio) * xK;
+	const inCanvas = checkImgInCanvas(dy, dx, width, height);
+	if (!inCanvas) {
+		return;
+	}
+	cacheCtx.drawImage(img,
+		0, 0, width, height,
+		dx, dy, canvasWidth * rw, canvasWidth * rh,
 	);
 }
 
@@ -107,10 +135,11 @@ export function renderPigeon(currentY: number, imgItem: ImgItem, timeout: number
 
 //	飞机，向左
 export function renderAirplane(currentY: number, imgItem: ImgItem) {
-	const {init, yK, xK, img} = imgItem;
+
+	const {initX, yK, xK, img} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = (init - currentY) * yK;
-	const dx = (init + currentY) * xK;
+	const dy = (initX - currentY) * yK;
+	const dx = (initX + currentY) * xK;
 	const inCanvas = checkImgInCanvas(dy, dx, width, height);
 	//	优化，不在canvas画布范围
 	if (!inCanvas) {

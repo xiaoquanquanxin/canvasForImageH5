@@ -3,6 +3,7 @@ import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
 import {timeout} from "@ts/data/timeout";
 import {playBgm} from "@ts/playAudio/audioList";
+import {canvasWidth, mainRatio} from "@ts/data/device";
 //	事件记录
 export const eventInfo: EventInfo = {
 	//	按下的位置
@@ -85,7 +86,7 @@ export const eventInitFn = () => {
 //	计算针对canvas的clientY
 function getClientY(e: TouchEvent) {
 	const {clientY} = e.changedTouches[0];
-	return clientY * devicePixelRatio;
+	return clientY * devicePixelRatio / mainRatio;
 }
 
 //	惯性

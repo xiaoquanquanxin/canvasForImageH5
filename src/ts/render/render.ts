@@ -13,7 +13,7 @@ import {
 	renderCloud_02,
 	renderCloud_03,
 	renderCloud_04,
-	renderCloud_05,
+	renderCloud_05, renderCloud_06,
 	renderCover,
 	renderPigeon,
 	renderPigeonSmall,
@@ -46,6 +46,7 @@ export const renderFn = () => {
 function mainRender(eventInfo: EventInfo) {
 	const _mainRender = (timeout: number) => {
 		const {currentY} = eventInfo;
+		document.getElementById("devicePixelRatio").innerText = (-currentY | 0).toString();
 		cacheCtx.clearRect(0, 0, canvasWidth, canvasHeight);
 		((run) => {
 			if (!run) {
@@ -53,13 +54,16 @@ function mainRender(eventInfo: EventInfo) {
 			}
 			//	背景
 			renderCover(currentY, imgMap.cover);
-			return;
 			//	云03
 			renderCloud_03(currentY, imgMap.cloud_03);
 			//	云02
 			renderCloud_02(currentY, imgMap.cloud_02);
+			//	云06
+			renderCloud_06(currentY, imgMap.cloud_06);
+			return;
 			//	云01
 			renderCloud_01(currentY, imgMap.cloud_01);
+
 			//	云04
 			renderCloud_04(currentY, imgMap.cloud_04);
 			//	飞机
