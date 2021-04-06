@@ -1,8 +1,7 @@
-import {$audio, $canvas, $loading} from "@ts/data/canvas";
+import {$canvas, $loading} from "@ts/data/canvas";
 import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
 import {timeout} from "@ts/data/timeout";
-import {audioMap} from "@ts/data/audios";
 import {playBgm} from "@ts/playAudio/audioList";
 //	事件记录
 export const eventInfo: EventInfo = {
