@@ -14,8 +14,10 @@ export interface ImgItem {
 	img: HTMLImageElement;
 	//	用于存储一些额外的信息
 	extra?: any;
-	//	初始Y
-	initiallyY?: number;
+	//	斜率
+	yK?: number;
+	xK?: number;
+	init?: number;
 }
 
 //	图片的map
