@@ -1,11 +1,10 @@
-import {eventInfoSubject, progressSubject} from "../data/observableData";
+import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
-import {$cacheCanvas, $canvas, $loading, $number, cacheCtx, ctx} from "../data/canvas";
+import {$cacheCanvas, $number, cacheCtx, ctx} from "@ts/data/canvas";
 import {canvasHeight, canvasWidth} from "@ts/data/device";
 import {imgMap} from "@ts/data/images";
-import {eventInfo} from "../event/event";
-import {timeout} from "../data/timeout";
-
+import {eventInfo, eventInitFn} from "@ts/event/event";
+import {timeout} from "@ts/data/timeout";
 //	总渲染定时器延迟间隔
 const {mainRenderTimeoutDelay} = timeout;
 import {
@@ -16,24 +15,24 @@ import {
 	renderCloud_04,
 	renderCloud_05,
 	renderCover,
-	renderPigeon, renderPigeonSmall, renderYear
+	renderPigeon,
+	renderPigeonSmall,
+	renderYear,
 } from "@ts/render/renderList";
-
 //	渲染函数
 export const renderFn = () => {
-	//	观察图片加载
+	//	观察资源加载进度
 	progressSubject.subscribe((progress: number) => {
 		//	console.log('图片加载数量', progress);
 		$number.innerText = `${progress}%`;
 		//	如果加载完成
 		if (progress === 100) {
-			setTimeout(() => {
-				$loading.remove();
+			window.requestAnimationFrame(() => {
 				eventInfoSubject.next(eventInfo);
-			}, 100);
+			});
 		}
 	});
-	//	察者事件
+	//	观察滚动事件
 	eventInfoSubject.subscribe((_eventInfo: EventInfo) => {
 		if (_eventInfo === null) {
 			return;
@@ -41,7 +40,6 @@ export const renderFn = () => {
 		mainRender(_eventInfo);
 	});
 };
-
 
 //	主要方法
 function mainRender(eventInfo: EventInfo) {
@@ -53,30 +51,28 @@ function mainRender(eventInfo: EventInfo) {
 				return;
 			}
 			//	背景
-			renderCover(currentY, imgMap.cover.img);
+			renderCover(currentY, imgMap.cover);
 			//	云03
-			renderCloud_03(currentY, imgMap.cloud_03.img);
+			renderCloud_03(currentY, imgMap.cloud_03);
 			//	云02
-			renderCloud_02(currentY, imgMap.cloud_02.img);
+			renderCloud_02(currentY, imgMap.cloud_02);
 			//	云01
-			renderCloud_01(currentY, imgMap.cloud_01.img);
+			renderCloud_01(currentY, imgMap.cloud_01);
 			//	云04
-			renderCloud_04(currentY, imgMap.cloud_04.img);
+			renderCloud_04(currentY, imgMap.cloud_04);
 			//	飞机
-			renderAirplane(currentY, imgMap.airplane.img);
+			renderAirplane(currentY, imgMap.airplane);
 			//	云05
-			renderCloud_05(currentY, imgMap.cloud_05.img);
+			renderCloud_05(currentY, imgMap.cloud_05);
 			//	鸽子
 			renderPigeon(currentY, imgMap.pigeon, timeout);
 			//	年代
-			renderYear(currentY, imgMap.year.img);
+			renderYear(currentY, imgMap.year);
 			//	小鸽子
 			renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
 		})(true);
 		//	小鸽子
 		// renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
-
-
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};
