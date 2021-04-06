@@ -20,7 +20,7 @@ export const eventInfo: EventInfo = {
 export const eventInitFn = () => {
 	//	手触摸
 	$canvas.addEventListener("touchstart", (e: TouchEvent) => {
-		const {clientY} = e.changedTouches[0];
+		const clientY = getClientY(e);
 		const {currentY} = eventInfo;
 		eventInfo.touchStartY = clientY - currentY;
 		eventInfo.inertiaStartY = clientY;
@@ -32,7 +32,7 @@ export const eventInitFn = () => {
 	});
 	//	手移动
 	$canvas.addEventListener("touchmove", (e: TouchEvent) => {
-		const {clientY} = e.changedTouches[0];
+		const clientY = getClientY(e);
 		const {touchStartY, inertiaStartY, diffY} = eventInfo;
 		eventInfo.currentY = (Math.min(0, clientY - touchStartY)) | 0;
 		//	上次移动的距离
@@ -45,10 +45,11 @@ export const eventInitFn = () => {
 	});
 	//	手放开
 	$canvas.addEventListener("touchend", (e: TouchEvent) => {
-		const {clientY} = e.changedTouches[0];
+		const clientY = getClientY(e);
 		const {diffY, prevDiffY, touchStartY} = eventInfo;
 		eventInfo.currentY = Math.min(clientY - touchStartY, 0);
-		timeout.inertia = (diffY - prevDiffY) * 1.6 | 0;
+		//	惯性的一些初始参数
+		timeout.inertia = (diffY - prevDiffY) / devicePixelRatio * 2 | 0;
 		//	console.log(timeout.inertia);
 		//	最后一次释放时的惯性
 		inertiaFn();
@@ -68,6 +69,13 @@ export const eventInitFn = () => {
 	});
 };
 
+
+//	计算针对canvas的clientY
+function getClientY(e: TouchEvent) {
+	const {clientY} = e.changedTouches[0];
+	return clientY * devicePixelRatio;
+}
+
 //	惯性
 function inertiaFn() {
 	eventInfoSubject.next(eventInfo);
@@ -78,7 +86,8 @@ function inertiaFn() {
 		if (((inertia) | 0) === 0) {
 			return;
 		}
-		const distance = .4;
+		//	每次减少的量
+		const distance = 1 / devicePixelRatio;
 		inertia += inertia > 0 ? -1 * distance : distance;
 		currentY += inertia;
 		if (currentY >= 0) {
