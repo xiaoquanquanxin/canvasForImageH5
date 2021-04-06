@@ -1,8 +1,9 @@
-import {$canvas} from "../data/canvas";
-import {eventInfoSubject} from "../data/observableData";
+import {$audio, $canvas, $loading} from "@ts/data/canvas";
+import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
 import {timeout} from "@ts/data/timeout";
-
+import {audioMap} from "@ts/data/audios";
+import {playBgm} from "@ts/playAudio/audioList";
 //	事件记录
 export const eventInfo: EventInfo = {
 	//	按下的位置
@@ -19,7 +20,7 @@ export const eventInfo: EventInfo = {
 //	事件初始化
 export const eventInitFn = () => {
 	//	手触摸
-	$canvas.addEventListener('touchstart', (e: TouchEvent) => {
+	$canvas.addEventListener("touchstart", (e: TouchEvent) => {
 		const {clientY} = e.changedTouches[0];
 		const {currentY} = eventInfo;
 		eventInfo.touchStartY = clientY - currentY;
@@ -31,7 +32,7 @@ export const eventInitFn = () => {
 		eventInfo.diffY = 0;
 	});
 	//	手移动
-	$canvas.addEventListener('touchmove', (e: TouchEvent) => {
+	$canvas.addEventListener("touchmove", (e: TouchEvent) => {
 		const {clientY} = e.changedTouches[0];
 		const {touchStartY, inertiaStartY, diffY} = eventInfo;
 		eventInfo.currentY = (Math.min(0, clientY - touchStartY)) | 0;
@@ -44,7 +45,7 @@ export const eventInitFn = () => {
 		eventInfoSubject.next(eventInfo);
 	});
 	//	手放开
-	$canvas.addEventListener('touchend', (e: TouchEvent) => {
+	$canvas.addEventListener("touchend", (e: TouchEvent) => {
 		const {clientY} = e.changedTouches[0];
 		const {diffY, prevDiffY, touchStartY} = eventInfo;
 		eventInfo.currentY = Math.min(clientY - touchStartY, 0);
@@ -53,11 +54,19 @@ export const eventInitFn = () => {
 		//	最后一次释放时的惯性
 		inertiaFn();
 	});
-
 	// 阻止默认的处理方式(阻止下拉滑动的效果)
-	document.body.addEventListener('touchmove', function (e) {
+	document.body.addEventListener("touchmove", function (e) {
 		e.preventDefault();
 	}, {passive: false});
+	//	点击loading页
+	$loading.addEventListener("click", () => {
+		if (progressSubject.value !== 100) {
+			//	未加载完成
+			return;
+		}
+		//	播放背景音乐
+		playBgm();
+	});
 };
 
 //	惯性
