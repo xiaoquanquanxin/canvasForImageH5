@@ -5,6 +5,7 @@ export interface EventInfo {
 	inertiaStartY?: number;
 	diffY?: number;
 	prevDiffY?: number;
+	isMoveEd?: boolean;
 }
 
 export interface ImgItem {

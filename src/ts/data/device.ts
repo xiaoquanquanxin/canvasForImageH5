@@ -13,3 +13,5 @@ console.log("devicePixelRatio：", devicePixelRatio);
 //	canvas的宽高
 export const canvasWidth = window.innerWidth * devicePixelRatio;
 export const canvasHeight = window.innerHeight * devicePixelRatio;
+
+document.getElementById('canvasHeight').innerText = canvasHeight.toString();

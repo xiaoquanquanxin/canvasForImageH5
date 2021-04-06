@@ -15,6 +15,8 @@ export const eventInfo: EventInfo = {
 	diffY: 0,
 	//	本次移动中，上一次移动的距离
 	prevDiffY: 0,
+	//	移动过了
+	isMoveEd: false,
 };
 //	事件初始化
 export const eventInitFn = () => {
@@ -33,7 +35,12 @@ export const eventInitFn = () => {
 	//	手移动
 	$canvas.addEventListener("touchmove", (e: TouchEvent) => {
 		const clientY = getClientY(e);
-		const {touchStartY, inertiaStartY, diffY} = eventInfo;
+		const {touchStartY, inertiaStartY, diffY, isMoveEd} = eventInfo;
+		if (isMoveEd) {
+			//	执行过移动的方法了
+			return;
+		}
+		eventInfo.isMoveEd = true;
 		eventInfo.currentY = (Math.min(0, clientY - touchStartY)) | 0;
 		//	上次移动的距离
 		eventInfo.prevDiffY = diffY;
@@ -41,7 +48,13 @@ export const eventInitFn = () => {
 		eventInfo.diffY = (clientY - inertiaStartY) | 0;
 		//	滑动惯性清零
 		timeout.inertia = 0;
-		eventInfoSubject.next(eventInfo);
+		// eventInfoSubject.next(eventInfo);
+		// eventInfo.isMoveEd = false;
+		window.requestAnimationFrame(() => {
+			eventInfoSubject.next(eventInfo);
+			//	可以执行下一次
+			eventInfo.isMoveEd = false;
+		});
 	});
 	//	手放开
 	$canvas.addEventListener("touchend", (e: TouchEvent) => {
@@ -49,7 +62,7 @@ export const eventInitFn = () => {
 		const {diffY, prevDiffY, touchStartY} = eventInfo;
 		eventInfo.currentY = Math.min(clientY - touchStartY, 0);
 		//	惯性的一些初始参数
-		timeout.inertia = (diffY - prevDiffY) / devicePixelRatio * 2 | 0;
+		timeout.inertia = (diffY - prevDiffY) | 0;
 		//	console.log(timeout.inertia);
 		//	最后一次释放时的惯性
 		inertiaFn();
@@ -68,7 +81,6 @@ export const eventInitFn = () => {
 		playBgm();
 	});
 };
-
 
 //	计算针对canvas的clientY
 function getClientY(e: TouchEvent) {
@@ -92,8 +104,9 @@ function inertiaFn() {
 		currentY += inertia;
 		if (currentY >= 0) {
 			inertia = 0;
+			currentY = 0;
 		}
-		eventInfo.currentY += inertia;
+		eventInfo.currentY = currentY;
 		timeout.inertia = inertia;
 		//	console.log(inertia);
 		inertiaFn();

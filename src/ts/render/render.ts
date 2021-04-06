@@ -1,9 +1,9 @@
 import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
-import {$cacheCanvas, $number, cacheCtx, ctx} from "@ts/data/canvas";
+import {$cacheCanvas, $loading, $number, cacheCtx, ctx} from "@ts/data/canvas";
 import {canvasHeight, canvasWidth} from "@ts/data/device";
 import {imgMap} from "@ts/data/images";
-import {eventInfo, eventInitFn} from "@ts/event/event";
+import {eventInfo} from "@ts/event/event";
 import {timeout} from "@ts/data/timeout";
 //	总渲染定时器延迟间隔
 const {mainRenderTimeoutDelay} = timeout;
@@ -27,6 +27,7 @@ export const renderFn = () => {
 		$number.innerText = `${progress}%`;
 		//	如果加载完成
 		if (progress === 100) {
+			$loading.remove();
 			window.requestAnimationFrame(() => {
 				eventInfoSubject.next(eventInfo);
 			});
@@ -52,6 +53,7 @@ function mainRender(eventInfo: EventInfo) {
 			}
 			//	背景
 			renderCover(currentY, imgMap.cover);
+			return;
 			//	云03
 			renderCloud_03(currentY, imgMap.cloud_03);
 			//	云02
