@@ -9,9 +9,9 @@ function renderStatic(dy: number, img: HTMLImageElement) {
 	const ratio = canvasHeight / canvasWidth;
 	cacheCtx.drawImage(img,
 		//	img x,y,w,h
-		0, 0, width, ratio * width,
+		0, -dy, width, ratio * width,
 		//	canvas x,y,w,h
-		0, dy, canvasWidth, canvasHeight);
+		0, 0, canvasWidth, canvasHeight);
 }
 
 //	画背景
