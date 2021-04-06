@@ -5,18 +5,21 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-store, must-revalidate">
+    <meta HTTP-EQUIV="expires" CONTENT="0">
     <title>xxx项目</title>
     <style>
         * {
             margin: 0;
             padding: 0;
         }
-        
+
         html, body, canvas, #loading {
             width: 100%;
             height: 100%;
         }
-        
+
         #loading {
             position: absolute;
             top: 0;
@@ -25,8 +28,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-color: white;
         }
-        
+
         #number {
             font-style: italic;
             display: flex;
@@ -37,6 +41,7 @@
 <div id="loading">
     <div id="number"></div>
 </div>
+<audio src="" id="audio"></audio>
 <canvas id="canvas"></canvas>
 </body>
 </html>
