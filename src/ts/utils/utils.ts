@@ -15,12 +15,12 @@ export const getImageRatio = (img) => {
 export const checkImgInCanvas = (dy: number, dx: number, width: number, height: number): boolean => {
 	return !(dy > canvasHeight || dx > canvasWidth || dx < -width * mainRatio || dy < -height * mainRatio);
 };
-//	上下左右线性移动
+//	上下左右线性移动 - 基础方法
 export const linearMove = (currentY: number, imgItem: ImgItem) => {
 	const {initX, initY, yK, xK, img} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = initY + (currentY * mainRatio) * yK;
-	const dx = initX + (currentY * mainRatio) * xK;
+	const dy = getDy(initY, currentY, yK);
+	const dx = getDx(initX, currentY, xK);
 	const inCanvas = checkImgInCanvas(dy, dx, width, height);
 	//	优化渲染
 	if (!inCanvas) {
@@ -31,3 +31,9 @@ export const linearMove = (currentY: number, imgItem: ImgItem) => {
 		dx, dy, canvasWidth * rw, canvasWidth * rh,
 	);
 };
+//	获取dy
+export const getDy = (initY: number, currentY: number, yK: number) => {
+	return initY + (currentY * mainRatio) * yK;
+};
+//	获取dx
+export const getDx = getDy;
