@@ -1,5 +1,5 @@
 //	加载的图片列表，map等
-//	第一段
+//	section01
 import airplane from "@img/section01/airplane.png";
 import cloud_01 from "@img/section01/cloud_01.png";
 import cloud_02 from "@img/section01/cloud_02.png";
@@ -11,7 +11,7 @@ import cover from "@img/cover.jpg";
 import pigeon from "@img/section01/pigeon.png";
 import year from "@img/section01/year.png";
 import pigeon_s from "@img/section01/pigeon_s.png";
-//	第二段
+//	section02
 import airplane_up from "@img/section02/airplane_up.png";
 import cloud_sun from "@img/section02/cloud_sun.png";
 import tiananmenpng from "@img/section02/tiananmen.png";
@@ -19,8 +19,18 @@ import tiananmenjpg from "@img/section02/tiananmen.jpg";
 import panzers from "@img/section02/panzers.png";
 import people from "@img/section02/people.png";
 import flag from "@img/section02/flag.png";
+//	section03
+import wall from "@img/section03/wall.png";
+import door from "@img/section03/door.png";
+import car from "@img/section03/car.png";
+//	吊井
+import cranes from "@img/section03/cranes.png";
+import rood from "@img/section03/rood.png";
+import smoke from "@img/section03/smoke.png";
+import sunshine from "@img/section03/sunshine.png";
+//
 import {ImgItem, ImgMap} from "@ts/interface/interface";
-import {canvasHeight, canvasWidth} from "@ts/data/device";
+import {canvasWidth} from "@ts/data/device";
 //	图片的map
 export const imgMap: ImgMap = {
 	//	背景
@@ -226,10 +236,43 @@ export const imgMap: ImgMap = {
 		xK: 0,
 		initY: 9.65 * canvasWidth,
 		initX: .195 * canvasWidth,
-		//	拐点，进行另一端计算，由于统一了currentY的度量，所以可以用绝对值数字
-		inflexionPoint: 6.25 * 750,
-		//	拐点后的斜率
-		inflexionYK: 1,
+		//	拐点列表
+		inflexionPointList: [
+			{inflexionPoint: 6.25 * 750, inflexionPointXK: 0, inflexionPointYK: 1},
+		],
+	},
+	//	section03
+	//	墙
+	wall: {
+		name: "wall",
+		src: wall,
+		img: new Image(),
+		size: 19103,
+		yK: 1,
+		xK: 0,
+		initY: 7.9 * canvasWidth,
+		initX: 0,
+		//	拐点列表
+		inflexionPointList: [
+			{inflexionPoint: 8 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
+			{inflexionPoint: 9 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
+		],
+	},
+	//	门
+	door: {
+		name: "door",
+		src: door,
+		img: new Image(),
+		size: 19103,
+		yK: 1,
+		xK: 0,
+		initY: 9.05 * canvasWidth,
+		initX: canvasWidth * 1.39,
+		//	拐点列表
+		inflexionPointList: [
+			{inflexionPoint: 8 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
+			{inflexionPoint: 9 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
+		],
 	},
 };
 //	图片的list

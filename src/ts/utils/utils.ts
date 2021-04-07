@@ -17,11 +17,11 @@ export const checkImgInCanvas = (dy: number, dx: number, width: number, height: 
 };
 //	获取dy
 export const getDy = (initY: number, currentY: number, yK: number): number => {
-	return initY + (currentY * mainRatio) * yK;
+	return (initY + (currentY * mainRatio) * yK) | 0;
 };
 //	获取dx
 export const getDx = (initY: number, currentY: number, xK: number): number => {
-	return initY + (currentY * mainRatio) * xK;
+	return (initY + (currentY * mainRatio) * xK) | 0;
 };
 //	上下左右线性移动 - 基础方法
 export const linearMove = (currentY: number, imgItem: ImgItem) => {
@@ -46,7 +46,6 @@ export const hasInflectionMove = (currentY: number, imgItem: ImgItem) => {
 	let dy = getDy(initY, currentY, yK);
 	let dx = getDx(initX, currentY, xK);
 	for (const {inflexionPoint, inflexionPointYK, inflexionPointXK} of inflexionPointList) {
-		// console.log(inflexionPoint, inflexionPointYK, inflexionPointXK);
 		if (0 > inflexionPoint + currentY) {
 			dy = getDx(dy, inflexionPoint + currentY, inflexionPointYK - yK);
 			dx = getDx(dx, inflexionPoint + currentY, inflexionPointXK - xK);

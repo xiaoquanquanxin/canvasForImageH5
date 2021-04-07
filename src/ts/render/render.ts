@@ -16,14 +16,14 @@ import {
 	renderCloud_05,
 	renderCloud_06,
 	renderCloud_sun,
-	renderCover,
+	renderCover, renderDoor,
 	renderFlag,
 	renderPanzers,
 	renderPeople,
 	renderPigeon,
 	renderPigeonSmall,
 	renderTiananmenjpg,
-	renderTiananmenpng,
+	renderTiananmenpng, renderWall,
 	renderYear,
 } from "@ts/render/renderList";
 //	渲染函数
@@ -101,6 +101,10 @@ function mainRender(eventInfo: EventInfo) {
 			renderPeople(currentY, imgMap.people);
 			//	国旗
 			renderFlag(currentY, imgMap.flag);
+			//	section03
+			renderWall(currentY, imgMap.wall);
+			//	门
+			renderDoor(currentY, imgMap.door);
 		})(true);
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);

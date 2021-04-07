@@ -1,6 +1,6 @@
 import {canvasHeight, canvasWidth, mainRatio} from "@ts/data/device";
 import {cacheCtx} from "@ts/data/canvas";
-import {checkImgInCanvas, getDx, getDy, getImageRatio, linearMove} from "@ts/utils/utils";
+import {checkImgInCanvas, getDx, getDy, getImageRatio, hasInflectionMove, linearMove} from "@ts/utils/utils";
 import {ImgItem} from "@ts/interface/interface";
 
 //	静止的，与currentY完全匹配的
@@ -155,21 +155,43 @@ export function renderPeople(currentY: number, imgItem: ImgItem) {
 
 //	国旗
 export function renderFlag(currentY: number, imgItem: ImgItem) {
-	let {initX: dx, initY, yK, img, inflexionPoint, inflexionYK} = imgItem;
+	hasInflectionMove(currentY, imgItem);
+}
+
+//	section03
+//	墙
+export function renderWall(currentY: number, imgItem: ImgItem) {
+	hasInflectionMove(currentY, imgItem);
+}
+
+//	门
+export function renderDoor(currentY: number, imgItem: ImgItem) {
+	let {initX, initY, yK, xK, img, inflexionPointList} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
 	let dy = getDy(initY, currentY, yK);
-	if (0 > inflexionPoint + currentY) {
-		//	进入拐点
-		dy = getDy(dy, inflexionPoint + currentY, inflexionYK - yK);
+	let dx = getDx(initX, currentY, xK);
+	for (const {inflexionPoint, inflexionPointYK, inflexionPointXK} of inflexionPointList) {
+		if (0 > inflexionPoint + currentY) {
+			dy = getDx(dy, inflexionPoint + currentY, inflexionPointYK - yK);
+			dx = getDx(dx, inflexionPoint + currentY, inflexionPointXK - xK);
+		}
 	}
 	const inCanvas = checkImgInCanvas(dy, dx, width, height);
 	//	优化渲染
 	if (!inCanvas) {
 		return;
 	}
+	const sx: number = (() => {
+		if (9 * 750 > -currentY) {
+			return 0;
+		} else if (9.2 * 750 > -currentY) {
+			return width / 3;
+		} else {
+			return width * 2 / 3;
+		}
+	})();
 	cacheCtx.drawImage(img,
-		0, 0, width, height,
-		dx, dy, canvasWidth * rw, canvasWidth * rh,
+		sx, 0, width / 3, height,
+		dx, dy, canvasWidth * rw / 3, canvasWidth * rh,
 	);
 }
-
