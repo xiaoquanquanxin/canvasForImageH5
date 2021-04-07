@@ -121,3 +121,55 @@ export function renderPigeonSmall(currentY: number, imgItem: ImgItem, timeout: n
 	};
 	_render();
 }
+
+//	section 02
+//	天安门jpg
+export function renderTiananmenjpg(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	太阳照射的云
+export function renderCloud_sun(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	向上飞的飞机
+export function renderAirplane_up(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	天安门png
+export function renderTiananmenpng(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	坦克
+export function renderPanzers(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	人群
+export function renderPeople(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	国旗
+export function renderFlag(currentY: number, imgItem: ImgItem) {
+	let {initX: dx, initY, yK, img, inflexionPoint, inflexionYK} = imgItem;
+	const {rw, rh, width, height} = getImageRatio(img);
+	let dy = getDy(initY, currentY, yK);
+	if (0 > inflexionPoint + currentY) {
+		//	进入拐点
+		dy = getDy(dy, inflexionPoint + currentY, inflexionYK - yK);
+	}
+	const inCanvas = checkImgInCanvas(dy, dx, width, height);
+	//	优化渲染
+	if (!inCanvas) {
+		return;
+	}
+	cacheCtx.drawImage(img,
+		0, 0, width, height,
+		dx, dy, canvasWidth * rw, canvasWidth * rh,
+	);
+}
+
