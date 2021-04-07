@@ -27,12 +27,12 @@ export interface ImgMap {
 	[any: string]: ImgItem;
 
 	airplane: ImgItem;
-	bird: ImgItem;
 	cloud_01: ImgItem;
 	cloud_02: ImgItem;
 	cloud_03: ImgItem;
 	cloud_04: ImgItem;
 	cloud_05: ImgItem;
+	cloud_06: ImgItem;
 	cover: ImgItem;
 	pigeon: ImgItem;
 	year: ImgItem;
