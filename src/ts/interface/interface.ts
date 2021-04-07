@@ -8,7 +8,20 @@ export interface EventInfo {
 	isMoveEd?: boolean;
 }
 
+//	拐点
+interface InflexionPoint {
+	//	拐点位置
+	inflexionPoint: number;
+	//	拐点后x斜率
+	inflexionPointXK: number;
+	//	拐点后y斜率
+	inflexionPointYK: number
+}
+
+//	每一组图片
 export interface ImgItem {
+	[any: string]: any;
+
 	src: string;
 	size: number;
 	name?: string;
@@ -20,13 +33,8 @@ export interface ImgItem {
 	xK?: number;
 	initY?: number;
 	initX?: number;
-	//	拐点，进行另一端计算，这个值是说，我当前图片运动到dy为inflexionPoint的时候进行改变
-	inflexionPoint?: number;
-	//	拐点后的
-	inflexionYK?: number;
-	inflexionXK?: number;
-	inflexionInitY?: number;
-	inflexionInitX?: number;
+	//	拐点列表
+	inflexionPointList?: Array<InflexionPoint>;
 }
 
 //	图片的map
