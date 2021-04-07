@@ -13,7 +13,8 @@ import {
 	renderCloud_02,
 	renderCloud_03,
 	renderCloud_04,
-	renderCloud_05, renderCloud_06,
+	renderCloud_05,
+	renderCloud_06,
 	renderCover,
 	renderPigeon,
 	renderPigeonSmall,
@@ -54,31 +55,29 @@ function mainRender(eventInfo: EventInfo) {
 			}
 			//	背景
 			renderCover(currentY, imgMap.cover);
-			//	云03
+			//	黑色小云
 			renderCloud_03(currentY, imgMap.cloud_03);
-			//	云02
+			//	黄色大云
 			renderCloud_02(currentY, imgMap.cloud_02);
-			//	云06
+			//	灰色大云
 			renderCloud_06(currentY, imgMap.cloud_06);
-			return;
-			//	云01
+			//	灰色大云
 			renderCloud_01(currentY, imgMap.cloud_01);
-
-			//	云04
+			//	鸽子
+			renderPigeon(currentY, imgMap.pigeon, timeout);
+			//	灰色远处的大云
 			renderCloud_04(currentY, imgMap.cloud_04);
 			//	飞机
 			renderAirplane(currentY, imgMap.airplane);
-			//	云05
+			//	近处的大灰云
 			renderCloud_05(currentY, imgMap.cloud_05);
-			//	鸽子
-			renderPigeon(currentY, imgMap.pigeon, timeout);
 			//	年代
 			renderYear(currentY, imgMap.year);
 			//	小鸽子
 			renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
 		})(true);
-		//	小鸽子
 		// renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
+
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};
