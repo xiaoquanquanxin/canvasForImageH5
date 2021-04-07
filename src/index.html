@@ -37,28 +37,28 @@
         }
     </style>
     <style>
-        #devicePixelRatio {
+        #info {
             background-color: whitesmoke;
-            color: red;
             position: absolute;
             z-index: +1;
             top: 0;
             left: 0;
         }
 
+        #devicePixelRatio {
+            color: red;
+        }
+
         #canvasHeight {
-            background-color: whitesmoke;
             color: blue;
-            position: absolute;
-            z-index: +1;
-            top: 2em;
-            left: 0;
         }
     </style>
 </head>
 <body>
-<div id="devicePixelRatio">3</div>
-<div id="canvasHeight">3</div>
+<div id="info">
+    <div id="devicePixelRatio"></div>
+    <div id="canvasHeight"></div>
+</div>
 <div id="loading">
     <div id="number"></div>
 </div>
