@@ -19,8 +19,8 @@ export const checkImgInCanvas = (dy: number, dx: number, width: number, height: 
 export const linearMove = (currentY: number, imgItem: ImgItem) => {
 	const {initX, initY, yK, xK, img} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = (initY + currentY * mainRatio) * yK;
-	const dx = (initX + currentY * mainRatio) * xK;
+	const dy = initY + (currentY * mainRatio) * yK;
+	const dx = initX + (currentY * mainRatio) * xK;
 	const inCanvas = checkImgInCanvas(dy, dx, width, height);
 	//	优化渲染
 	if (!inCanvas) {
