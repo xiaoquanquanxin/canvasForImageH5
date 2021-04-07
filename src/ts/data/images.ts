@@ -72,8 +72,8 @@ export const imgMap: ImgMap = {
 		size: 19103,
 		yK: .3,
 		xK: 1,
-		initY: 2.5 * canvasWidth,
-		initX: 1.6 * canvasWidth,
+		initY: .8 * canvasWidth,
+		initX: 1.2 * canvasWidth,
 	},
 	//	灰色远处的大云
 	cloud_04: {

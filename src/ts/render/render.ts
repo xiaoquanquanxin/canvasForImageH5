@@ -76,7 +76,6 @@ function mainRender(eventInfo: EventInfo) {
 			//	小鸽子
 			renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
 		})(true);
-		// renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
 
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
