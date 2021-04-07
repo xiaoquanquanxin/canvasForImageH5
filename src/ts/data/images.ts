@@ -211,10 +211,10 @@ export const imgMap: ImgMap = {
 		src: people,
 		img: new Image(),
 		size: 19103,
-		yK: 1.05,
-		xK: .1,
-		initY: 6.4 * canvasWidth,
-		initX: 1.04 * canvasWidth,
+		yK: .95,
+		xK: -.1,
+		initY: 6.57 * canvasWidth,
+		initX: -.6 * canvasWidth,
 	},
 	//	国旗
 	flag: {
