@@ -8,16 +8,19 @@ import {timeout} from "@ts/data/timeout";
 //	总渲染定时器延迟间隔
 const {mainRenderTimeoutDelay} = timeout;
 import {
-	renderAirplane,
+	renderAirplane, renderAirplane_up,
 	renderCloud_01,
 	renderCloud_02,
 	renderCloud_03,
 	renderCloud_04,
 	renderCloud_05,
 	renderCloud_06,
-	renderCover,
+	renderCloud_sun,
+	renderCover, renderFlag, renderPanzers, renderPeople,
 	renderPigeon,
 	renderPigeonSmall,
+	renderTiananmenjpg,
+	renderTiananmenpng,
 	renderYear,
 } from "@ts/render/renderList";
 //	渲染函数
@@ -47,7 +50,10 @@ export const renderFn = () => {
 function mainRender(eventInfo: EventInfo) {
 	const _mainRender = (timeout: number) => {
 		const {currentY} = eventInfo;
-		document.getElementById("devicePixelRatio").innerText = (-currentY | 0).toString();
+		const y = -currentY / canvasWidth;
+		const r = canvasHeight / canvasWidth;
+		document.getElementById("devicePixelRatio").innerText = "currentY:" + currentY.toFixed(2) + "\nk * " + (y).toFixed(2) + "\n" + (r).toFixed(2) + "\n头部：" + (r + y).toFixed(2) + "\n";
+		//		"底部" + (y + r + r).toFixed(2);
 		cacheCtx.clearRect(0, 0, canvasWidth, canvasHeight);
 		((run) => {
 			if (!run) {
@@ -55,6 +61,7 @@ function mainRender(eventInfo: EventInfo) {
 			}
 			//	背景
 			renderCover(currentY, imgMap.cover);
+			//	section 01
 			//	黑色小云
 			renderCloud_03(currentY, imgMap.cloud_03);
 			//	黄色大云
@@ -75,8 +82,23 @@ function mainRender(eventInfo: EventInfo) {
 			renderYear(currentY, imgMap.year);
 			//	小鸽子
 			renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
+			//	section 02
+			//	天安门jpg
+			renderTiananmenjpg(currentY, imgMap.tiananmenjpg);
+			//	太阳照射的云
+			renderCloud_sun(currentY, imgMap.cloud_sun);
+			//	向上飞的飞机
+			renderAirplane_up(currentY, imgMap.airplane_up);
+			//	天安门png
+			renderTiananmenpng(currentY, imgMap.tiananmenpng);
+			//	坦克
+			renderPanzers(currentY, imgMap.panzers);
+			renderPanzers(currentY, imgMap.panzers2);
+			//	人群
+			renderPeople(currentY, imgMap.people);
+			//	国旗
+			renderFlag(currentY, imgMap.flag);
 		})(true);
-
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};
