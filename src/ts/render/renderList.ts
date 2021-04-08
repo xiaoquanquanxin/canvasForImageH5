@@ -1,31 +1,17 @@
 import {canvasHeight, canvasWidth, mainRatio} from "@ts/data/device";
 import {cacheCtx} from "@ts/data/canvas";
 import {
-	checkImgInCanvas,
-	getDx,
-	getDy,
-	getImageRatio, getInflectionRenderBasicParams,
+	getInflectionRenderBasicParams,
 	getRenderBasicParams,
 	hasInflectionMove,
 	linearMove,
+	linearMoveWithTimeout,
 } from "@ts/utils/utils";
 import {ImgItem} from "@ts/interface/interface";
 
-//	静止的，与currentY完全匹配的
-function renderStatic(dy: number, img: HTMLImageElement) {
-	const {width} = getImageRatio(img);
-	const ratio = canvasHeight / canvasWidth;
-	cacheCtx.drawImage(img,
-		//	img x,y,w,h
-		0, -dy, width, width * ratio,
-		//	canvas x,y,w,h
-		0, 0, canvasWidth, canvasHeight);
-}
-
 //	画背景
 export function renderCover(currentY: number, imgItem: ImgItem) {
-	const {img} = imgItem;
-	renderStatic(currentY, img);
+	linearMove(currentY, imgItem);
 }
 
 //	黑色小云
@@ -45,24 +31,7 @@ export function renderCloud_06(currentY: number, imgItem: ImgItem) {
 
 //	鸽子，向左
 export function renderPigeon(currentY: number, imgItem: ImgItem, timeout: number) {
-	const {initX, initY, yK, xK, img, extra} = imgItem;
-	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = getDy(initY, currentY, yK);
-	const dx = getDx(initX, currentY, xK);
-	extra.dx = dx;
-	extra.dy = dy;
-	const inCanvas = checkImgInCanvas(dy, dx, width, height);
-	if (!inCanvas) {
-		return;
-	}
-	const _render = () => {
-		const {dx, dy} = extra;
-		cacheCtx.drawImage(img,
-			timeout % 2 ? width / 2 : 0, 0, width / 2, height,
-			dx, dy, canvasWidth * rw / 2, canvasWidth * rh,
-		);
-	};
-	_render();
+	linearMoveWithTimeout(currentY, imgItem, timeout, 2);
 }
 
 //	灰色大云，向右
@@ -92,7 +61,7 @@ export function renderYear(currentY: number, imgItem: ImgItem) {
 		return;
 	}
 	const total = 62;
-	// console.log(canvasHeight - dy | 0);
+	//	特殊处理
 	let i = ((canvasHeight - dy) / total * 6) | 0;
 	i = Math.min(i, total - 1);
 	i = Math.max(i, 0);
@@ -104,28 +73,12 @@ export function renderYear(currentY: number, imgItem: ImgItem) {
 
 //	小鸽子
 export function renderPigeonSmall(currentY: number, imgItem: ImgItem, timeout: number) {
-	const {initX, initY, yK, xK, img, extra} = imgItem;
-	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = getDy(initY, currentY, yK);
-	const dx = getDx(initX, currentY, xK);
-	extra.dx = dx;
-	extra.dy = dy;
-	const inCanvas = checkImgInCanvas(dy, dx, width, height);
-	if (!inCanvas) {
-		return;
-	}
-	const _render = () => {
-		const {dx, dy} = extra;
-		const sx: number = timeout % 3 / 3 * width;
-		cacheCtx.drawImage(img,
-			sx, 0, width / 3, height,
-			dx, dy, canvasWidth * rw / 2, canvasWidth * rh,
-		);
-	};
-	_render();
+	linearMoveWithTimeout(currentY, imgItem, timeout, 3);
 }
 
-//	section 02
+/**
+ * section 02*****************************************************************
+ * */
 //	天安门jpg
 export function renderTiananmenjpg(currentY: number, imgItem: ImgItem) {
 	linearMove(currentY, imgItem);
@@ -161,22 +114,37 @@ export function renderFlag(currentY: number, imgItem: ImgItem) {
 	hasInflectionMove(currentY, imgItem);
 }
 
-//	section03
+/**
+ * section03*****************************************************************
+ * */
+//	阳光
+export function renderSunShine(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
+//	吊井
+export function renderCranes(currentY: number, imgItem: ImgItem, timeout) {
+	linearMoveWithTimeout(currentY, imgItem, timeout, 24);
+}
+
+//	道路
+export function renderRoad(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
 //	墙
 export function renderWall(currentY: number, imgItem: ImgItem) {
 	hasInflectionMove(currentY, imgItem);
 }
 
 //	卡车
-export function renderCar(currentY: number, imgItem: ImgItem) {
-	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
-	if (!inCanvas) {
-		return;
-	}
-	cacheCtx.drawImage(img,
-		0, 0, width / 2, height,
-		dx, dy, canvasWidth * rw / 2, canvasWidth * rh,
-	);
+export function renderCar(currentY: number, imgItem: ImgItem, timeout: number) {
+	linearMoveWithTimeout(currentY, imgItem, timeout, 2);
+}
+
+//	烟尘
+export function renderSmoke(currentY: number, imgItem: ImgItem, timeout: number) {
+	linearMoveWithTimeout(currentY, imgItem, timeout, 3);
 }
 
 //	门
@@ -190,9 +158,9 @@ export function renderDoor(currentY: number, imgItem: ImgItem) {
 	const sx: number = (() => {
 		//	第二个拐点出
 		const {inflexionPoint} = inflexionPointList[1];
-		if (inflexionPoint > -currentY) {
+		if (inflexionPoint + .2 * 750 > -currentY) {
 			return 0;
-		} else if (inflexionPoint + .2 * 750 > -currentY) {
+		} else if (inflexionPoint + .4 * 750 > -currentY) {
 			return width / 3;
 		} else {
 			return width * 2 / 3;
@@ -203,3 +171,4 @@ export function renderDoor(currentY: number, imgItem: ImgItem) {
 		dx, dy, canvasWidth * rw / 3, canvasWidth * rh,
 	);
 }
+
