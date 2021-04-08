@@ -8,7 +8,9 @@ import {timeout} from "@ts/data/timeout";
 //	总渲染定时器延迟间隔
 const {mainRenderTimeoutDelay} = timeout;
 import {
-	renderAirplane, renderAirplane_up,
+	renderAirplane,
+	renderAirplane_up,
+	renderCar,
 	renderCloud_01,
 	renderCloud_02,
 	renderCloud_03,
@@ -16,14 +18,18 @@ import {
 	renderCloud_05,
 	renderCloud_06,
 	renderCloud_sun,
-	renderCover, renderDoor,
+	renderCover, renderCranes,
+	renderDoor,
 	renderFlag,
 	renderPanzers,
 	renderPeople,
 	renderPigeon,
 	renderPigeonSmall,
+	renderRoad,
+	renderSmoke, renderSunShine,
 	renderTiananmenjpg,
-	renderTiananmenpng, renderWall,
+	renderTiananmenpng,
+	renderWall,
 	renderYear,
 } from "@ts/render/renderList";
 //	渲染函数
@@ -85,7 +91,9 @@ function mainRender(eventInfo: EventInfo) {
 			renderYear(currentY, imgMap.year);
 			//	小鸽子
 			renderPigeonSmall(currentY, imgMap.pigeon_s, timeout);
-			//	section 02
+			/**
+			 * section02*****************************************************************
+			 * */
 			//	天安门jpg
 			renderTiananmenjpg(currentY, imgMap.tiananmenjpg);
 			//	太阳照射的云
@@ -101,11 +109,26 @@ function mainRender(eventInfo: EventInfo) {
 			renderPeople(currentY, imgMap.people);
 			//	国旗
 			renderFlag(currentY, imgMap.flag);
-			//	section03
+			/**
+			 * section03*****************************************************************
+			 * */
+			//	阳光
+			renderSunShine(currentY, imgMap.sunshine);
+			//	吊井
+			renderCranes(currentY, imgMap.cranes, timeout);
+			//	道路
+			renderRoad(currentY, imgMap.road);
+			//	卡车
+			renderCar(currentY, imgMap.car, timeout);
+			//	烟尘
+			renderSmoke(currentY, imgMap.smoke, timeout);
+			//	墙
 			renderWall(currentY, imgMap.wall);
 			//	门
 			renderDoor(currentY, imgMap.door);
 		})(true);
+		//	道路
+		// renderRoad(currentY, imgMap.road);
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};
