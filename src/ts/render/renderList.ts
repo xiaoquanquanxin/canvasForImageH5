@@ -1,6 +1,14 @@
 import {canvasHeight, canvasWidth, mainRatio} from "@ts/data/device";
 import {cacheCtx} from "@ts/data/canvas";
-import {checkImgInCanvas, getDx, getDy, getImageRatio, hasInflectionMove, linearMove} from "@ts/utils/utils";
+import {
+	checkImgInCanvas,
+	getDx,
+	getDy,
+	getImageRatio, getInflectionRenderBasicParams,
+	getRenderBasicParams,
+	hasInflectionMove,
+	linearMove,
+} from "@ts/utils/utils";
 import {ImgItem} from "@ts/interface/interface";
 
 //	静止的，与currentY完全匹配的
@@ -79,12 +87,7 @@ export function renderCloud_05(currentY: number, imgItem: ImgItem) {
 
 //	年份
 export function renderYear(currentY: number, imgItem: ImgItem) {
-	const {initX, initY, yK, xK, img} = imgItem;
-	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = getDy(initY, currentY, yK);
-	const dx = getDx(initX, currentY, xK);
-	const inCanvas = checkImgInCanvas(dy, dx, width, height);
-	//	优化渲染
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
 	if (!inCanvas) {
 		return;
 	}
@@ -164,27 +167,32 @@ export function renderWall(currentY: number, imgItem: ImgItem) {
 	hasInflectionMove(currentY, imgItem);
 }
 
-//	门
-export function renderDoor(currentY: number, imgItem: ImgItem) {
-	let {initX, initY, yK, xK, img, inflexionPointList} = imgItem;
-	const {rw, rh, width, height} = getImageRatio(img);
-	let dy = getDy(initY, currentY, yK);
-	let dx = getDx(initX, currentY, xK);
-	for (const {inflexionPoint, inflexionPointYK, inflexionPointXK} of inflexionPointList) {
-		if (0 > inflexionPoint + currentY) {
-			dy = getDx(dy, inflexionPoint + currentY, inflexionPointYK - yK);
-			dx = getDx(dx, inflexionPoint + currentY, inflexionPointXK - xK);
-		}
-	}
-	const inCanvas = checkImgInCanvas(dy, dx, width, height);
-	//	优化渲染
+//	卡车
+export function renderCar(currentY: number, imgItem: ImgItem) {
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
 	if (!inCanvas) {
 		return;
 	}
+	cacheCtx.drawImage(img,
+		0, 0, width / 2, height,
+		dx, dy, canvasWidth * rw / 2, canvasWidth * rh,
+	);
+}
+
+//	门
+export function renderDoor(currentY: number, imgItem: ImgItem) {
+	const {inflexionPointList} = imgItem;
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getInflectionRenderBasicParams(currentY, imgItem);
+	if (!inCanvas) {
+		return;
+	}
+	//	特殊处理
 	const sx: number = (() => {
-		if (9 * 750 > -currentY) {
+		//	第二个拐点出
+		const {inflexionPoint} = inflexionPointList[1];
+		if (inflexionPoint > -currentY) {
 			return 0;
-		} else if (9.2 * 750 > -currentY) {
+		} else if (inflexionPoint + .2 * 750 > -currentY) {
 			return width / 3;
 		} else {
 			return width * 2 / 3;
