@@ -73,3 +73,15 @@ export interface AudioMap {
 
 	bgm: AudioItem;
 }
+
+//	计算绘图基础数据 ，这也是最终的数据
+export interface RenderBasicParams {
+	img: HTMLImageElement;
+	width: number;
+	height: number;
+	dx: number;
+	dy: number;
+	rw: number;
+	rh: number;
+	inCanvas: boolean
+}
