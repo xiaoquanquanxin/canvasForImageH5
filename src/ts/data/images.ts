@@ -11,7 +11,9 @@ import cover from "@img/cover.jpg";
 import pigeon from "@img/section01/pigeon.png";
 import year from "@img/section01/year.png";
 import pigeon_s from "@img/section01/pigeon_s.png";
-//	section02
+/**
+ * section02*****************************************************************
+ * */
 import airplane_up from "@img/section02/airplane_up.png";
 import cloud_sun from "@img/section02/cloud_sun.png";
 import tiananmenpng from "@img/section02/tiananmen.png";
@@ -19,22 +21,33 @@ import tiananmenjpg from "@img/section02/tiananmen.jpg";
 import panzers from "@img/section02/panzers.png";
 import people from "@img/section02/people.png";
 import flag from "@img/section02/flag.png";
-//	section03
+/**
+ * section03*****************************************************************
+ * */
 import wall from "@img/section03/wall.png";
 import door from "@img/section03/door.png";
 import car from "@img/section03/car.png";
 //	吊井
 import cranes from "@img/section03/cranes.png";
-import rood from "@img/section03/rood.png";
+import road from "@img/section03/road.png";
 import smoke from "@img/section03/smoke.png";
-import sunshine from "@img/section03/sunshine.png";
-//
+import sunshine from "@img/section03/sunshine.jpg";
+//	其他
 import {ImgItem, ImgMap} from "@ts/interface/interface";
 import {canvasWidth} from "@ts/data/device";
 //	图片的map
 export const imgMap: ImgMap = {
 	//	背景
-	cover: {name: "cover", src: cover, img: new Image(), size: 60190, initX: 0, yK: 1, xK: 0},
+	cover: {
+		name: "cover",
+		src: cover,
+		img: new Image(),
+		size: 60190,
+		yK: 1,
+		xK: 0,
+		initY: 0,
+		initX: 0,
+	},
 	//	黑色小云
 	cloud_03: {
 		name: "cloud_03",
@@ -148,7 +161,9 @@ export const imgMap: ImgMap = {
 		initX: .6 * canvasWidth,
 		initY: 3.5 * canvasWidth,
 	},
-	//	section 02
+	/**
+	 * section02*****************************************************************
+	 * */
 	//	天安门jpg
 	tiananmenjpg: {
 		name: "tiananmenjpg",
@@ -241,7 +256,71 @@ export const imgMap: ImgMap = {
 			{inflexionPoint: 6.25 * 750, inflexionPointXK: 0, inflexionPointYK: 1},
 		],
 	},
-	//	section03
+	/**
+	 * section03*****************************************************************
+	 * */
+	//	阳光
+	sunshine: {
+		name: "sunshine",
+		src: sunshine,
+		img: new Image(),
+		size: 19103,
+		yK: 0,
+		xK: 1.5,
+		initY: -.1 * canvasWidth,
+		initX: 14.5 * canvasWidth,
+	},
+	//	吊井
+	cranes: {
+		name: "cranes",
+		src: cranes,
+		img: new Image(),
+		size: 19103,
+		extra: {},
+		yK: 0,
+		xK: 1.5,
+		initY: .1 * canvasWidth,
+		initX: 14.8 * canvasWidth,
+		scale: 2,
+	},
+	//	道路
+	road: {
+		name: "road",
+		src: road,
+		img: new Image(),
+		size: 19103,
+		extra: {},
+		yK: 0,
+		xK: 1.5,
+		initY: .4 * canvasWidth,
+		initX: 13.5 * canvasWidth,
+	},
+	//	卡车
+	car: {
+		name: "car",
+		src: car,
+		img: new Image(),
+		size: 19103,
+		extra: {},
+		yK: -1.05,
+		xK: -.4,
+		initY: -9.9 * canvasWidth,
+		initX: -4.4 * canvasWidth,
+		//	渲染，在此值之后才开始，用于强制阻止渲染
+		renderAfter: 8.5 * 750,
+	},
+	//	烟尘
+	smoke: {
+		name: "smoke",
+		src: smoke,
+		img: new Image(),
+		size: 19103,
+		extra: {},
+		yK: -1.05,
+		xK: -.4,
+		initY: -8.95 * canvasWidth,
+		initX: -3.8 * canvasWidth,
+	},
 	//	墙
 	wall: {
 		name: "wall",
@@ -254,7 +333,7 @@ export const imgMap: ImgMap = {
 		initX: 0,
 		//	拐点列表
 		inflexionPointList: [
-			{inflexionPoint: 8 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
+			{inflexionPoint: 8.2 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
 			{inflexionPoint: 9 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
 		],
 	},
@@ -267,10 +346,10 @@ export const imgMap: ImgMap = {
 		yK: 1,
 		xK: 0,
 		initY: 9.05 * canvasWidth,
-		initX: canvasWidth * 1.39,
+		initX: 1.39 * canvasWidth,
 		//	拐点列表
 		inflexionPointList: [
-			{inflexionPoint: 8 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
+			{inflexionPoint: 8.2 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
 			{inflexionPoint: 9 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
 		],
 	},
