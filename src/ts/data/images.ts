@@ -279,7 +279,7 @@ export const imgMap: ImgMap = {
 		extra: {},
 		yK: 0,
 		xK: 1.5,
-		initY: .1 * canvasWidth,
+		initY: .05 * canvasWidth,
 		initX: 14.8 * canvasWidth,
 		scale: 2,
 	},

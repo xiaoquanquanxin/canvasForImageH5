@@ -35,6 +35,10 @@ export interface ImgItem {
 	initX?: number;
 	//	拐点列表
 	inflexionPointList?: Array<InflexionPoint>;
+	//	渲染，在此值之后才开始，用于强制阻止渲染
+	renderAfter?: number;
+	//	放大倍数
+	scale?: number;
 }
 
 //	图片的map

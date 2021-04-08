@@ -18,7 +18,8 @@ import {
 	renderCloud_05,
 	renderCloud_06,
 	renderCloud_sun,
-	renderCover, renderCranes,
+	renderCover,
+	renderCranes,
 	renderDoor,
 	renderFlag,
 	renderPanzers,
@@ -26,7 +27,8 @@ import {
 	renderPigeon,
 	renderPigeonSmall,
 	renderRoad,
-	renderSmoke, renderSunShine,
+	renderSmoke,
+	renderSunShine,
 	renderTiananmenjpg,
 	renderTiananmenpng,
 	renderWall,
@@ -127,6 +129,7 @@ function mainRender(eventInfo: EventInfo) {
 			//	门
 			renderDoor(currentY, imgMap.door);
 		})(true);
+
 		//	道路
 		// renderRoad(currentY, imgMap.road);
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);

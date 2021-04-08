@@ -26,23 +26,29 @@ export const getDx = (initY: number, currentY: number, xK: number): number => {
 //	上下左右线性移动 - 基础方法
 export const linearMove = (currentY: number, imgItem: ImgItem) => {
 	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
+	const {scale = 1} = imgItem;
 	if (!inCanvas) {
 		return;
 	}
+	const dw = canvasWidth * rw * scale;
+	const dh = canvasWidth * rh * scale;
 	cacheCtx.drawImage(img,
 		0, 0, width, height,
-		dx, dy, canvasWidth * rw, canvasWidth * rh,
+		dx, dy, dw, dh,
 	);
 };
 //	带拐点的移动 - 基础方法
 export const hasInflectionMove = (currentY: number, imgItem: ImgItem) => {
 	const {img, width, height, dx, dy, rw, rh, inCanvas} = getInflectionRenderBasicParams(currentY, imgItem);
+	const {scale = 1} = imgItem;
 	if (!inCanvas) {
 		return;
 	}
+	const dw = canvasWidth * rw * scale;
+	const dh = canvasWidth * rh * scale;
 	cacheCtx.drawImage(img,
 		0, 0, width, height,
-		dx, dy, canvasWidth * rw, canvasWidth * rh,
+		dx, dy, dw, dh,
 	);
 };
 //	基础方法 - 抽象方法
@@ -72,7 +78,7 @@ export const getInflectionRenderBasicParams = (currentY: number, imgItem: ImgIte
 };
 //	定时器的运动 - 基础运动
 export const linearMoveWithTimeout = (currentY: number, imgItem: ImgItem, timeout: number, times: number) => {
-	const {extra} = imgItem;
+	const {extra, scale = 1} = imgItem;
 	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
 	if (!inCanvas) {
 		return;
@@ -82,9 +88,11 @@ export const linearMoveWithTimeout = (currentY: number, imgItem: ImgItem, timeou
 	const _render = () => {
 		const {dx, dy} = extra;
 		const sx: number = timeout % times / times * width;
+		const dw = canvasWidth * rw / times * scale;
+		const dh = canvasWidth * rh * scale;
 		cacheCtx.drawImage(img,
 			sx, 0, width / times, height,
-			dx, dy, canvasWidth * rw / times, canvasWidth * rh,
+			dx, dy, dw, dh,
 		);
 	};
 	_render();
