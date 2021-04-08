@@ -269,6 +269,10 @@ export const imgMap: ImgMap = {
 		xK: 1.5,
 		initY: -.1 * canvasWidth,
 		initX: 14.5 * canvasWidth,
+		//	拐点列表
+		inflexionPointList: [
+			{inflexionPoint: 11 * 750, inflexionPointXK: 0, inflexionPointYK: -1},
+		],
 	},
 	//	吊井
 	cranes: {

@@ -130,6 +130,8 @@ function mainRender(eventInfo: EventInfo) {
 			renderDoor(currentY, imgMap.door);
 		})(true);
 
+		//	阳光
+		// renderSunShine(currentY, imgMap.sunshine);
 		//	道路
 		// renderRoad(currentY, imgMap.road);
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);

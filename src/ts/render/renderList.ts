@@ -119,7 +119,7 @@ export function renderFlag(currentY: number, imgItem: ImgItem) {
  * */
 //	阳光
 export function renderSunShine(currentY: number, imgItem: ImgItem) {
-	linearMove(currentY, imgItem);
+	hasInflectionMove(currentY, imgItem);
 }
 
 //	吊井
