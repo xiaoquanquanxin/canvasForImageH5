@@ -1,7 +1,7 @@
 //	计算当前图片在canvas中的比例
 import {canvasHeight, canvasWidth, mainRatio} from "@ts/data/device";
 import {cacheCtx} from "@ts/data/canvas";
-import {ImgItem} from "@ts/interface/interface";
+import {ImgItem, RenderBasicParams} from "@ts/interface/interface";
 //	获取图片比例
 export const getImageRatio = (img) => {
 	const {width, height} = img;
@@ -12,8 +12,8 @@ export const getImageRatio = (img) => {
 	};
 };
 //	检查要画的图在canvas范围内
-export const checkImgInCanvas = (dy: number, dx: number, width: number, height: number): boolean => {
-	return !(dy > canvasHeight || dx > canvasWidth || dx < -width * mainRatio || dy < -height * mainRatio);
+export const checkImgInCanvas = (dy: number, dx: number, width: number, height: number, renderAfter: number = 0, currentY: number): boolean => {
+	return !(dy > canvasHeight || dx > canvasWidth || dx < -width * mainRatio || dy < -height * mainRatio || -currentY < renderAfter);
 };
 //	获取dy
 export const getDy = (initY: number, currentY: number, yK: number): number => {
@@ -25,12 +25,7 @@ export const getDx = (initY: number, currentY: number, xK: number): number => {
 };
 //	上下左右线性移动 - 基础方法
 export const linearMove = (currentY: number, imgItem: ImgItem) => {
-	const {initX, initY, yK, xK, img} = imgItem;
-	const {rw, rh, width, height} = getImageRatio(img);
-	const dy = getDy(initY, currentY, yK);
-	const dx = getDx(initX, currentY, xK);
-	const inCanvas = checkImgInCanvas(dy, dx, width, height);
-	//	优化渲染
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
 	if (!inCanvas) {
 		return;
 	}
@@ -41,7 +36,28 @@ export const linearMove = (currentY: number, imgItem: ImgItem) => {
 };
 //	带拐点的移动 - 基础方法
 export const hasInflectionMove = (currentY: number, imgItem: ImgItem) => {
-	let {initX, initY, yK, xK, img, inflexionPointList} = imgItem;
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getInflectionRenderBasicParams(currentY, imgItem);
+	if (!inCanvas) {
+		return;
+	}
+	cacheCtx.drawImage(img,
+		0, 0, width, height,
+		dx, dy, canvasWidth * rw, canvasWidth * rh,
+	);
+};
+//	基础方法 - 抽象方法
+export const getRenderBasicParams = (currentY: number, imgItem: ImgItem): RenderBasicParams => {
+	const {initX, initY, yK, xK, img, renderAfter} = imgItem;
+	const {rw, rh, width, height} = getImageRatio(img);
+	const dy = getDy(initY, currentY, yK);
+	const dx = getDx(initX, currentY, xK);
+	//	优化渲染
+	const inCanvas = checkImgInCanvas(dy, dx, width, height, renderAfter, currentY);
+	return {img, width, height, dx, dy, rw, rh, inCanvas};
+};
+//	带拐点的基础方法 - 抽象方法
+export const getInflectionRenderBasicParams = (currentY: number, imgItem: ImgItem): RenderBasicParams => {
+	let {initX, initY, yK, xK, img, inflexionPointList, renderAfter} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
 	let dy = getDy(initY, currentY, yK);
 	let dx = getDx(initX, currentY, xK);
@@ -51,13 +67,25 @@ export const hasInflectionMove = (currentY: number, imgItem: ImgItem) => {
 			dx = getDx(dx, inflexionPoint + currentY, inflexionPointXK - xK);
 		}
 	}
-	const inCanvas = checkImgInCanvas(dy, dx, width, height);
-	//	优化渲染
+	const inCanvas = checkImgInCanvas(dy, dx, width, height, renderAfter, currentY);
+	return {img, width, height, dx, dy, rw, rh, inCanvas};
+};
+//	定时器的运动 - 基础运动
+export const linearMoveWithTimeout = (currentY: number, imgItem: ImgItem, timeout: number, times: number) => {
+	const {extra} = imgItem;
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
 	if (!inCanvas) {
 		return;
 	}
-	cacheCtx.drawImage(img,
-		0, 0, width, height,
-		dx, dy, canvasWidth * rw, canvasWidth * rh,
-	);
+	extra.dx = dx;
+	extra.dy = dy;
+	const _render = () => {
+		const {dx, dy} = extra;
+		const sx: number = timeout % times / times * width;
+		cacheCtx.drawImage(img,
+			sx, 0, width / times, height,
+			dx, dy, canvasWidth * rw / times, canvasWidth * rh,
+		);
+	};
+	_render();
 };
