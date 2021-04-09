@@ -97,3 +97,9 @@ export const linearMoveWithTimeout = (currentY: number, imgItem: ImgItem, timeou
 	};
 	_render();
 };
+//	取 smaller ~ larger 范围内的值
+export const getValueInRange = (smaller: number, middle: number, larger: number): number => {
+	middle = Math.min(middle, larger);
+	middle = Math.max(middle, smaller);
+	return middle;
+};
