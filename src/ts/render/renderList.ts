@@ -5,7 +5,7 @@ import {
 	getRenderBasicParams, getValueInRange,
 	hasInflectionMove,
 	linearMove,
-	linearMoveWithTimeout,
+	linearMoveWithTimeout, rotateOnly,
 } from "@ts/utils/utils";
 import {ImgItem} from "@ts/interface/interface";
 import dragonfly from "@img/section04/dragonfly.png";
@@ -190,7 +190,7 @@ export function renderYear1959(currentY: number, imgItem: ImgItem) {
 	}
 	const total = 62;
 	//	特殊处理
-	let i = ((dy) / total * 6) | 0;
+	let i = (dy / total * 6) | 0;
 	i = getValueInRange(0, i, total - 1);
 	cacheCtx.drawImage(img,
 		width * i / total, 0, width / total, height,
@@ -272,4 +272,31 @@ export function renderCamion(currentY: number, imgItem: ImgItem) {
 	const scale = 1 + (12.25 * 750 + currentY) / canvasWidth / 10;
 	imgItem.scale = scale;
 	linearMove(currentY, imgItem);
+}
+
+//	报纸01
+export function renderNewspaper_01(currentY: number, imgItem: ImgItem) {
+	rotateOnly(currentY, imgItem);
+}
+
+//	报纸02
+export function renderNewspaper_02(currentY: number, imgItem: ImgItem) {
+	rotateOnly(currentY, imgItem);
+}
+
+//	year1979
+export function renderYear1979(currentY: number, imgItem: ImgItem) {
+	const {countingStartY} = imgItem;
+	const {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
+	if (!inCanvas) {
+		return;
+	}
+	const total = 63;
+	//	特殊处理
+	let i = (-(countingStartY + currentY) / total * 6) | 0;
+	i = getValueInRange(0, i, total - 1);
+	cacheCtx.drawImage(img,
+		width * i / total, 0, width / total, height,
+		dx, dy, canvasWidth * rw / total, canvasWidth * rh,
+	);
 }

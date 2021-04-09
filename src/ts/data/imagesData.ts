@@ -50,6 +50,13 @@ import camion from "@img/section04/camion.png";
 import launchCenter from "@img/section04/launchCenter.png";
 //	沙漠
 import desert from "@img/section04/desert.png";
+//	报纸1
+import newspaper_01 from "@img/section04/newspaper_01.png";
+// import newspaper_01 from "@img/section04/1.png";
+//	报纸2
+import newspaper_02 from "@img/section04/newspaper_02.png";
+//	year1979
+import year1979 from "@img/section04/year1979.png";
 //	星座
 import constellation from "@img/section04/constellation.png";
 //	蜻蜓
@@ -523,6 +530,66 @@ export const imgMap: ImgMap = {
 		//	渲染，在此值之后才开始，用于强制阻止渲染
 		renderAfter: 13 * 750,
 		renderBefore: 15 * 750,
+	},
+	//	报纸01
+	newspaper_01: {
+		name: "newspaper_01",
+		src: newspaper_01,
+		img: new Image(),
+		size: 60190,
+		yK: 0,
+		xK: 0,
+		initY: 0,
+		initX: 0,
+		//	渲染，在此值之后才开始，用于强制阻止渲染
+		renderAfter: 15 * 750,
+		renderBefore: 17 * 750,
+		//	开始计数的高度
+		countingStartY: 15 * 750,
+		countingEndY: 17 * 750,
+		//	旋转中心
+		staticRotateX: .5 * canvasWidth,
+		staticRotateY: .6 * canvasWidth,
+		//	旋转方向
+		rotateDirection: -1,
+	},
+	//	报纸02
+	newspaper_02: {
+		name: "newspaper_02",
+		src: newspaper_02,
+		img: new Image(),
+		size: 60190,
+		yK: 0,
+		xK: 0,
+		initY: 0,
+		initX: 0,
+		//	渲染，在此值之后才开始，用于强制阻止渲染
+		renderAfter: 15 * 750,
+		renderBefore: 17 * 750,
+		//	开始计数的高度
+		countingStartY: 15 * 750,
+		countingEndY: 17 * 750,
+		//	旋转中心
+		staticRotateX: .5 * canvasWidth,
+		staticRotateY: .6 * canvasWidth,
+		//	旋转方向
+		rotateDirection: +1,
+	},
+	//	year1979
+	year1979: {
+		name: "year1979",
+		src: year1979,
+		img: new Image(),
+		size: 60190,
+		yK: 0,
+		xK: 0,
+		initY: .5 * canvasWidth,
+		initX: .25 * canvasWidth,
+		//	渲染，在此值之后才开始，用于强制阻止渲染
+		renderAfter: 15.5 * 750,
+		renderBefore: 17.5 * 750,
+		//	开始计数的高度
+		countingStartY: 15.6 * 750,
 	},
 };
 //	图片的list

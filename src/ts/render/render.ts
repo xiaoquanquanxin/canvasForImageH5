@@ -9,7 +9,9 @@ import {timeout} from "@ts/data/timeout";
 const {mainRenderTimeoutDelay} = timeout;
 import {
 	renderAirplane,
-	renderAirplane_up, renderBlackCloud, renderCamion,
+	renderAirplane_up,
+	renderBlackCloud,
+	renderCamion,
 	renderCar, renderClock,
 	renderCloud_01,
 	renderCloud_02,
@@ -17,25 +19,32 @@ import {
 	renderCloud_04,
 	renderCloud_05,
 	renderCloud_06,
-	renderCloud_sun, renderConstellation,
+	renderCloud_sun,
+	renderConstellation,
 	renderCover,
-	renderCranes, renderDesert,
-	renderDoor, renderDragonfly,
-	renderFlag, renderLaunchCenter, renderLeifeng, renderMushroom,
+	renderCranes,
+	renderDesert,
+	renderDoor,
+	renderDragonfly,
+	renderFlag,
+	renderLaunchCenter,
+	renderLeifeng,
+	renderMushroom, renderNewspaper_01, renderNewspaper_02,
 	renderPanzers,
 	renderPeople,
 	renderPigeon,
-	renderPigeonSmall, renderPoet,
-	renderRoad, renderSatellite,
+	renderPigeonSmall,
+	renderPoet,
+	renderRoad,
+	renderSatellite,
 	renderSmoke,
 	renderSunShine,
 	renderTiananmenjpg,
 	renderTiananmenpng,
 	renderWall,
 	renderYear,
-	renderYear1959,
+	renderYear1959, renderYear1979,
 } from "@ts/render/renderList";
-import clock from "@img/section01/clock.png";
 //	渲染函数
 export const renderFn = () => {
 	//	观察资源加载进度
@@ -147,6 +156,11 @@ function mainRender(eventInfo: EventInfo) {
 			renderPoet(currentY, imgMap.poet);
 			//	星座
 			renderConstellation(currentY, imgMap.constellation);
+			//	报纸01
+			renderNewspaper_01(currentY, imgMap.newspaper_01);
+			renderNewspaper_02(currentY, imgMap.newspaper_02);
+			//	year1979
+			renderYear1979(currentY, imgMap.year1979);
 			//	卫星
 			renderSatellite(currentY, imgMap.satellite);
 			//	蘑菇云
@@ -160,6 +174,7 @@ function mainRender(eventInfo: EventInfo) {
 			//	军卡
 			renderCamion(currentY, imgMap.camion);
 		})(true);
+
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};

@@ -103,3 +103,27 @@ export const getValueInRange = (smaller: number, middle: number, larger: number)
 	middle = Math.max(middle, smaller);
 	return middle;
 };
+//	静态旋转 - 运动方法
+export const rotateOnly = (currentY: number, imgItem: ImgItem) => {
+	const {countingStartY, countingEndY, staticRotateX, staticRotateY, rotateDirection} = imgItem;
+	let {img, width, height, dx, dy, rw, rh, inCanvas} = getRenderBasicParams(currentY, imgItem);
+	if (!inCanvas) {
+		return;
+	}
+	//	特殊处理
+	let scale = -(countingStartY + currentY) / (countingEndY - countingStartY);
+	//	缩放
+	scale = getValueInRange(0, scale, 1);
+	const dw = canvasWidth * rw * scale;
+	const dh = canvasWidth * rh * scale;
+	//	旋转
+	const rotate = scale;
+	cacheCtx.save();
+	cacheCtx.translate(staticRotateX, staticRotateY);
+	cacheCtx.rotate(rotate * 3 * rotateDirection);
+	cacheCtx.drawImage(img,
+		0, 0, width, height,
+		dx - dw / 2, dy - dh / 2, dw, dh,
+	);
+	cacheCtx.restore();
+};
