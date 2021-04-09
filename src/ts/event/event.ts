@@ -42,7 +42,7 @@ export const eventInitFn = () => {
 			return;
 		}
 		eventInfo.isMoveEd = true;
-		eventInfo.currentY = (Math.min(0, clientY - touchStartY)) | 0;
+		eventInfo.currentY = getCurrentY(clientY, touchStartY);
 		//	上次移动的距离
 		eventInfo.prevDiffY = diffY;
 		//	本次移动的距离
@@ -61,7 +61,7 @@ export const eventInitFn = () => {
 	$canvas.addEventListener("touchend", (e: TouchEvent) => {
 		const clientY = getClientY(e);
 		const {diffY, prevDiffY, touchStartY} = eventInfo;
-		eventInfo.currentY = Math.min(clientY - touchStartY, 0);
+		eventInfo.currentY = getCurrentY(clientY, touchStartY);
 		//	惯性的一些初始参数
 		timeout.inertia = (diffY - prevDiffY) | 0;
 		//	console.log(timeout.inertia);
@@ -86,7 +86,8 @@ export const eventInitFn = () => {
 //	计算针对canvas的clientY
 function getClientY(e: TouchEvent) {
 	const {clientY} = e.changedTouches[0];
-	return clientY * devicePixelRatio / mainRatio;
+	//	最后一个除数是滑动比例【效率】
+	return clientY * devicePixelRatio / mainRatio / 1;
 }
 
 //	惯性
@@ -112,4 +113,9 @@ function inertiaFn() {
 		//	console.log(inertia);
 		inertiaFn();
 	});
+}
+
+//	计算 currentY
+function getCurrentY(clientY: number, touchStartY: number): number {
+	return Math.min(clientY - touchStartY, 0) | 0;
 }
