@@ -37,6 +37,8 @@ export interface ImgItem {
 	inflexionPointList?: Array<InflexionPoint>;
 	//	渲染，在此值之后才开始，用于强制阻止渲染
 	renderAfter?: number;
+	//	同上
+	renderBefore?: number;
 	//	放大倍数
 	scale?: number;
 }

@@ -87,7 +87,7 @@ export const eventInitFn = () => {
 function getClientY(e: TouchEvent) {
 	const {clientY} = e.changedTouches[0];
 	//	最后一个除数是滑动比例【效率】
-	return clientY * devicePixelRatio / mainRatio / 1;
+	return clientY * devicePixelRatio / mainRatio / 2;
 }
 
 //	惯性

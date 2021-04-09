@@ -1,5 +1,5 @@
 import {progressSubject} from "@ts/data/observableData";
-import {imgList} from "@ts/data/images";
+import {imgList} from "@ts/data/imagesData";
 import {audioList} from "@ts/data/audios";
 //	总进度
 const totalProgress = [].concat(imgList).concat(audioList)

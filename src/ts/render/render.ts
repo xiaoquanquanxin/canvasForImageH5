@@ -2,14 +2,14 @@ import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
 import {$cacheCanvas, $loading, $number, cacheCtx, ctx} from "@ts/data/canvas";
 import {canvasHeight, canvasWidth} from "@ts/data/device";
-import {imgMap} from "@ts/data/images";
+import {imgMap} from "@ts/data/imagesData";
 import {eventInfo} from "@ts/event/event";
 import {timeout} from "@ts/data/timeout";
 //	总渲染定时器延迟间隔
 const {mainRenderTimeoutDelay} = timeout;
 import {
 	renderAirplane,
-	renderAirplane_up, renderBlackCloud,
+	renderAirplane_up, renderBlackCloud, renderCamion,
 	renderCar, renderClock,
 	renderCloud_01,
 	renderCloud_02,
@@ -17,22 +17,23 @@ import {
 	renderCloud_04,
 	renderCloud_05,
 	renderCloud_06,
-	renderCloud_sun,
+	renderCloud_sun, renderConstellation,
 	renderCover,
-	renderCranes,
-	renderDoor,
-	renderFlag,
+	renderCranes, renderDesert,
+	renderDoor, renderDragonfly,
+	renderFlag, renderLaunchCenter, renderLeifeng, renderMushroom,
 	renderPanzers,
 	renderPeople,
 	renderPigeon,
-	renderPigeonSmall,
-	renderRoad,
+	renderPigeonSmall, renderPoet,
+	renderRoad, renderSatellite,
 	renderSmoke,
 	renderSunShine,
 	renderTiananmenjpg,
 	renderTiananmenpng,
 	renderWall,
 	renderYear,
+	renderYear1959,
 } from "@ts/render/renderList";
 import clock from "@img/section01/clock.png";
 //	渲染函数
@@ -135,11 +136,30 @@ function mainRender(eventInfo: EventInfo) {
 			renderWall(currentY, imgMap.wall);
 			//	门
 			renderDoor(currentY, imgMap.door);
+			//	year1959
+			renderYear1959(currentY, imgMap.year1959);
+			//	蜻蜓
+			renderDragonfly(currentY, imgMap.dragonfly);
+			/**
+			 * section04*****************************************************************
+			 * */
+			//	诗人
+			renderPoet(currentY, imgMap.poet);
+			//	星座
+			renderConstellation(currentY, imgMap.constellation);
+			//	卫星
+			renderSatellite(currentY, imgMap.satellite);
+			//	蘑菇云
+			renderMushroom(currentY, imgMap.mushroom);
+			//	沙漠
+			renderDesert(currentY, imgMap.desert);
+			//	发射中心
+			renderLaunchCenter(currentY, imgMap.launchCenter);
+			//	雷锋
+			renderLeifeng(currentY, imgMap.leifeng);
+			//	军卡
+			renderCamion(currentY, imgMap.camion);
 		})(true);
-		//	阳光
-		// renderSunShine(currentY, imgMap.sunshine);
-		//	道路
-		// renderRoad(currentY, imgMap.road);
 		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};

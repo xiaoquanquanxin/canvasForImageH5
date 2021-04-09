@@ -36,6 +36,28 @@ import cranes from "@img/section03/cranes.png";
 import road from "@img/section03/road.png";
 import smoke from "@img/section03/smoke.png";
 import sunshine from "@img/section03/sunshine.jpg";
+import year1959 from "@img/section03/year1959.png";
+/**
+ * section04*****************************************************************
+ * */
+//	诗人
+import poet from "@img/section04/poet.png";
+//	雷锋
+import leifeng from "@img/section04/leifeng.png";
+//	军卡
+import camion from "@img/section04/camion.png";
+//	发射中心
+import launchCenter from "@img/section04/launchCenter.png";
+//	沙漠
+import desert from "@img/section04/desert.png";
+//	星座
+import constellation from "@img/section04/constellation.png";
+//	蜻蜓
+import dragonfly from "@img/section04/dragonfly.png";
+//	蘑菇云
+import mushroom from "@img/section04/mushroom.png";
+//	卫星
+import satellite from "@img/section04/satellite.png";
 //	其他
 import {ImgItem, ImgMap} from "@ts/interface/interface";
 import {canvasWidth} from "@ts/data/device";
@@ -172,7 +194,6 @@ export const imgMap: ImgMap = {
 		name: "year",
 		src: year,
 		img: new Image(),
-		extra: {},
 		size: 19103,
 		yK: 1,
 		xK: 0,
@@ -386,6 +407,122 @@ export const imgMap: ImgMap = {
 			{inflexionPoint: 8.2 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
 			{inflexionPoint: 9 * 750, inflexionPointXK: 1, inflexionPointYK: .5},
 		],
+	},
+	//	year1959
+	year1959: {
+		name: "year1959",
+		src: year1959,
+		img: new Image(),
+		size: 60190,
+		yK: -1,
+		xK: 0,
+		initY: -11 * canvasWidth,
+		initX: .2 * canvasWidth,
+	},
+	//	蜻蜓
+	dragonfly: {
+		name: "dragonfly",
+		src: dragonfly,
+		img: new Image(),
+		size: 60190,
+		yK: -1.05,
+		xK: -.4,
+		initY: -10.8 * canvasWidth,
+		initX: -4.6 * canvasWidth,
+	},
+	/**
+	 * section04*****************************************************************
+	 * */
+	//	诗人
+	poet: {
+		name: "poet",
+		src: poet,
+		img: new Image(),
+		size: 60190,
+		yK: -1,
+		xK: 0,
+		initY: -12 * canvasWidth,
+		initX: 0,
+	},
+	//	发射中心
+	launchCenter: {
+		name: "launchCenter",
+		src: launchCenter,
+		img: new Image(),
+		size: 60190,
+		yK: -.85,
+		xK: 0,
+		initY: -11.4 * canvasWidth,
+		initX: 0,
+	},
+	//	沙漠
+	desert: {
+		name: "desert",
+		src: desert,
+		img: new Image(),
+		size: 60190,
+		yK: -.8,
+		xK: 0,
+		initY: -10.6 * canvasWidth,
+		initX: 0,
+	},
+	//	雷锋
+	leifeng: {
+		name: "leifeng",
+		src: leifeng,
+		img: new Image(),
+		size: 60190,
+		yK: -1,
+		xK: 0,
+		initY: -13.2 * canvasWidth,
+		initX: 0,
+	},
+	//	军卡
+	camion: {
+		name: "camion",
+		src: camion,
+		img: new Image(),
+		size: 60190,
+		yK: -.92,
+		xK: -.15,
+		initY: -11.8 * canvasWidth,
+		initX: -1.9 * canvasWidth,
+	},
+	//	星座
+	constellation: {
+		name: "constellation",
+		src: constellation,
+		img: new Image(),
+		size: 60190,
+		yK: -1,
+		xK: 0,
+		initY: -14.8 * canvasWidth,
+		initX: 0,
+	},
+	//	蘑菇云
+	mushroom: {
+		name: "mushroom",
+		src: mushroom,
+		img: new Image(),
+		size: 60190,
+		yK: -1,
+		xK: 0,
+		initY: -14.9 * canvasWidth,
+		initX: 0,
+	},
+	//	卫星
+	satellite: {
+		name: "satellite",
+		src: satellite,
+		img: new Image(),
+		size: 60190,
+		yK: 0,
+		xK: 0,
+		initY: 0,
+		initX: .64 * canvasWidth,
+		//	渲染，在此值之后才开始，用于强制阻止渲染
+		renderAfter: 13 * 750,
+		renderBefore: 15 * 750,
 	},
 };
 //	图片的list

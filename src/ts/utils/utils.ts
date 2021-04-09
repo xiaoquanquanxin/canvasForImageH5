@@ -12,8 +12,8 @@ export const getImageRatio = (img) => {
 	};
 };
 //	检查要画的图在canvas范围内
-export const checkImgInCanvas = (dy: number, dx: number, width: number, height: number, renderAfter: number = 0, currentY: number): boolean => {
-	return !(dy > canvasHeight || dx > canvasWidth || dx < -width * mainRatio || dy < -height * mainRatio || -currentY < renderAfter);
+export const checkImgInCanvas = (dy: number, dx: number, width: number, height: number, renderAfter: number = 0, renderBefore: number = Infinity, currentY: number): boolean => {
+	return !(dy > canvasHeight || dx > canvasWidth || dx < -width * mainRatio || dy < -height * mainRatio || -currentY < renderAfter || -currentY > renderBefore);
 };
 //	获取dy
 export const getDy = (initY: number, currentY: number, yK: number): number => {
@@ -53,17 +53,17 @@ export const hasInflectionMove = (currentY: number, imgItem: ImgItem) => {
 };
 //	基础方法 - 抽象方法
 export const getRenderBasicParams = (currentY: number, imgItem: ImgItem): RenderBasicParams => {
-	const {initX, initY, yK, xK, img, renderAfter} = imgItem;
+	const {initX, initY, yK, xK, img, renderAfter, renderBefore} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
 	const dy = getDy(initY, currentY, yK);
 	const dx = getDx(initX, currentY, xK);
 	//	优化渲染
-	const inCanvas = checkImgInCanvas(dy, dx, width, height, renderAfter, currentY);
+	const inCanvas = checkImgInCanvas(dy, dx, width, height, renderAfter, renderBefore, currentY);
 	return {img, width, height, dx, dy, rw, rh, inCanvas};
 };
 //	带拐点的基础方法 - 抽象方法
 export const getInflectionRenderBasicParams = (currentY: number, imgItem: ImgItem): RenderBasicParams => {
-	let {initX, initY, yK, xK, img, inflexionPointList, renderAfter} = imgItem;
+	let {initX, initY, yK, xK, img, inflexionPointList, renderAfter, renderBefore} = imgItem;
 	const {rw, rh, width, height} = getImageRatio(img);
 	let dy = getDy(initY, currentY, yK);
 	let dx = getDx(initX, currentY, xK);
@@ -73,7 +73,7 @@ export const getInflectionRenderBasicParams = (currentY: number, imgItem: ImgIte
 			dx = getDx(dx, inflexionPoint + currentY, inflexionPointXK - xK);
 		}
 	}
-	const inCanvas = checkImgInCanvas(dy, dx, width, height, renderAfter, currentY);
+	const inCanvas = checkImgInCanvas(dy, dx, width, height, renderAfter, renderBefore, currentY);
 	return {img, width, height, dx, dy, rw, rh, inCanvas};
 };
 //	定时器的运动 - 基础运动
