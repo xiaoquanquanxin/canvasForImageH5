@@ -9,8 +9,8 @@ import {timeout} from "@ts/data/timeout";
 const {mainRenderTimeoutDelay} = timeout;
 import {
 	renderAirplane,
-	renderAirplane_up,
-	renderCar,
+	renderAirplane_up, renderBlackCloud,
+	renderCar, renderClock,
 	renderCloud_01,
 	renderCloud_02,
 	renderCloud_03,
@@ -34,6 +34,7 @@ import {
 	renderWall,
 	renderYear,
 } from "@ts/render/renderList";
+import clock from "@img/section01/clock.png";
 //	渲染函数
 export const renderFn = () => {
 	//	观察资源加载进度
@@ -72,7 +73,13 @@ function mainRender(eventInfo: EventInfo) {
 			}
 			//	背景
 			renderCover(currentY, imgMap.cover);
-			//	section 01
+			/**
+			 * section01*****************************************************************
+			 * */
+			//	钟表
+			renderClock(currentY, imgMap.clock, timeout);
+			//	黑色大云
+			renderBlackCloud(currentY, imgMap.black_cloud);
 			//	黑色小云
 			renderCloud_03(currentY, imgMap.cloud_03);
 			//	黄色大云
@@ -129,7 +136,6 @@ function mainRender(eventInfo: EventInfo) {
 			//	门
 			renderDoor(currentY, imgMap.door);
 		})(true);
-
 		//	阳光
 		// renderSunShine(currentY, imgMap.sunshine);
 		//	道路

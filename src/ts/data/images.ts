@@ -1,13 +1,17 @@
 //	加载的图片列表，map等
-//	section01
+import cover from "@img/cover.jpg";
+/**
+ * section01*****************************************************************
+ * */
 import airplane from "@img/section01/airplane.png";
+import black_cloud from "@img/section01/black_cloud.png";
+import clock from "@img/section01/clock.png";
 import cloud_01 from "@img/section01/cloud_01.png";
 import cloud_02 from "@img/section01/cloud_02.png";
 import cloud_03 from "@img/section01/cloud_03.png";
 import cloud_04 from "@img/section01/cloud_04.png";
 import cloud_05 from "@img/section01/cloud_05.png";
 import cloud_06 from "@img/section01/cloud_06.png";
-import cover from "@img/cover.jpg";
 import pigeon from "@img/section01/pigeon.png";
 import year from "@img/section01/year.png";
 import pigeon_s from "@img/section01/pigeon_s.png";
@@ -47,6 +51,32 @@ export const imgMap: ImgMap = {
 		xK: 0,
 		initY: 0,
 		initX: 0,
+	},
+	/**
+	 * section01*****************************************************************
+	 * */
+	//	钟表
+	clock: {
+		name: "clock",
+		src: clock,
+		img: new Image(),
+		extra: {},
+		size: 4436,
+		yK: 1,
+		xK: 0,
+		initY: 0,
+		initX: (1 - .375) * canvasWidth,
+	},
+	//	黑色大云
+	black_cloud: {
+		name: "black_cloud",
+		src: black_cloud,
+		img: new Image(),
+		size: 4436,
+		yK: 1,
+		xK: 0,
+		initY: 0,
+		initX: .465 * canvasWidth,
 	},
 	//	黑色小云
 	cloud_03: {

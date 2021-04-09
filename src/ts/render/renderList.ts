@@ -14,6 +14,16 @@ export function renderCover(currentY: number, imgItem: ImgItem) {
 	linearMove(currentY, imgItem);
 }
 
+//	钟表
+export function renderClock(currentY: number, imgItem: ImgItem, timeout: number) {
+	linearMoveWithTimeout(currentY, imgItem, timeout, 34);
+}
+
+//	黑色大云
+export function renderBlackCloud(currentY: number, imgItem: ImgItem) {
+	linearMove(currentY, imgItem);
+}
+
 //	黑色小云
 export function renderCloud_03(currentY: number, imgItem: ImgItem) {
 	linearMove(currentY, imgItem);
