@@ -3,7 +3,7 @@ import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
 import {timeout} from "@ts/data/timeout";
 import {playBgm} from "@ts/playAudio/audioList";
-import {canvasWidth, mainRatio} from "@ts/data/device";
+import {mainRatio} from "@ts/data/device";
 //	事件记录
 export const eventInfo: EventInfo = {
 	//	按下的位置
@@ -87,7 +87,7 @@ export const eventInitFn = () => {
 function getClientY(e: TouchEvent) {
 	const {clientY} = e.changedTouches[0];
 	//	最后一个除数是滑动比例【效率】
-	return clientY * devicePixelRatio / mainRatio / 2;
+	return (clientY * mainRatio / 1.2) | 0;
 }
 
 //	惯性
@@ -96,12 +96,14 @@ function inertiaFn() {
 	window.requestAnimationFrame(() => {
 		let {inertia} = timeout;
 		let {currentY} = eventInfo;
-		//	console.log(inertia);
-		if (((inertia) | 0) === 0) {
+		if ((inertia | 0) === 0) {
 			return;
 		}
 		//	每次减少的量
-		const distance = 1 / devicePixelRatio;
+		const distance = Math.sqrt(Math.abs(inertia));
+		if (distance < 1) {
+			return;
+		}
 		inertia += inertia > 0 ? -1 * distance : distance;
 		currentY += inertia;
 		if (currentY >= 0) {
@@ -110,7 +112,6 @@ function inertiaFn() {
 		}
 		eventInfo.currentY = currentY;
 		timeout.inertia = inertia;
-		//	console.log(inertia);
 		inertiaFn();
 	});
 }
