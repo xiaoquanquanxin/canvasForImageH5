@@ -96,14 +96,11 @@ function inertiaFn() {
 	window.requestAnimationFrame(() => {
 		let {inertia} = timeout;
 		let {currentY} = eventInfo;
-		if ((inertia | 0) === 0) {
+		if (Math.abs(inertia) - 1 <= 0.0001 || inertia === 0) {
 			return;
 		}
 		//	每次减少的量
-		const distance = Math.sqrt(Math.abs(inertia));
-		if (distance < 1) {
-			return;
-		}
+		const distance = Math.log(Math.abs(inertia)) / Math.log(4);
 		inertia += inertia > 0 ? -1 * distance : distance;
 		currentY += inertia;
 		if (currentY >= 0) {
