@@ -67,7 +67,7 @@ import mushroom from "@img/section04/mushroom.png";
 import satellite from "@img/section04/satellite.png";
 //	其他
 import {ImgItem, ImgMap} from "@ts/interface/interface";
-import {canvasWidth} from "@ts/data/device";
+import {canvasHeight, canvasWidth} from "@ts/data/device";
 //	图片的map
 export const imgMap: ImgMap = {
 	//	背景
@@ -549,7 +549,7 @@ export const imgMap: ImgMap = {
 		countingEndY: 17 * 750,
 		//	旋转中心
 		staticRotateX: .5 * canvasWidth,
-		staticRotateY: .6 * canvasWidth,
+		staticRotateY: .4 * canvasHeight,
 		//	旋转方向
 		rotateDirection: -1,
 	},
@@ -571,7 +571,7 @@ export const imgMap: ImgMap = {
 		countingEndY: 17 * 750,
 		//	旋转中心
 		staticRotateX: .5 * canvasWidth,
-		staticRotateY: .6 * canvasWidth,
+		staticRotateY: .4 * canvasHeight,
 		//	旋转方向
 		rotateDirection: +1,
 	},
