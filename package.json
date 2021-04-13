@@ -9,6 +9,7 @@
         "dev": "webpack --config ./webpack/webpack.dev.js",
         "prod": "webpack --config ./webpack/webpack.prod.js"
     },
+
     "repository": {
         "type": "git",
         "url": "git+https://github.com/xiaoquanquanxin/canvasForImageH5.git"
