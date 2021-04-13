@@ -107,7 +107,7 @@ function inertiaFn() {
 			inertia = 0;
 			currentY = 0;
 		}
-		eventInfo.currentY = currentY;
+		eventInfo.currentY = (currentY) | 0;
 		timeout.inertia = inertia;
 		inertiaFn();
 	});
