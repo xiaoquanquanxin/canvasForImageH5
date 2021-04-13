@@ -1,6 +1,6 @@
 import {eventInfoSubject, progressSubject} from "@ts/data/observableData";
 import {EventInfo} from "@ts/interface/interface";
-import {$cacheCanvas, $loading, $number, cacheCtx, ctx} from "@ts/data/canvas";
+import {$cacheCanvas, $canvas, $loading, $number, cacheCtx, ctx} from "@ts/data/canvas";
 import {canvasHeight, canvasWidth} from "@ts/data/device";
 import {imgMap} from "@ts/data/imagesData";
 import {eventInfo} from "@ts/event/event";
@@ -76,7 +76,8 @@ function mainRender(eventInfo: EventInfo) {
 		const r = canvasHeight / canvasWidth;
 		document.getElementById("devicePixelRatio").innerText = "currentY:" + currentY.toFixed(2) + "\nk * " + (y).toFixed(2) + "\n" + (r).toFixed(2) + "\n头部：" + (r + y).toFixed(2) + "\n";
 		//		"底部" + (y + r + r).toFixed(2);
-		cacheCtx.clearRect(0, 0, canvasWidth, canvasHeight);
+		const {width} = $cacheCanvas;
+		$cacheCanvas.width = width;
 		((run) => {
 			if (!run) {
 				return;
@@ -174,8 +175,7 @@ function mainRender(eventInfo: EventInfo) {
 			//	军卡
 			renderCamion(currentY, imgMap.camion);
 		})(true);
-
-		ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+		$canvas.width = width;
 		ctx.drawImage($cacheCanvas, 0, 0, canvasWidth, canvasHeight);
 	};
 	window.requestAnimationFrame(() => {
