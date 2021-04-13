@@ -62,8 +62,16 @@ export const eventInitFn = () => {
 		const clientY = getClientY(e);
 		const {diffY, prevDiffY, touchStartY} = eventInfo;
 		eventInfo.currentY = getCurrentY(clientY, touchStartY);
+		let inertia = (diffY - prevDiffY);
+		const {minInertia, maxInertia} = timeout;
+		//	限制惯性大小
+		if (inertia > maxInertia) {
+			inertia = maxInertia;
+		} else if (inertia < minInertia) {
+			inertia = minInertia;
+		}
 		//	惯性的一些初始参数
-		timeout.inertia = (diffY - prevDiffY) | 0;
+		timeout.inertia = inertia | 0;
 		//	console.log(timeout.inertia);
 		//	最后一次释放时的惯性
 		inertiaFn();
