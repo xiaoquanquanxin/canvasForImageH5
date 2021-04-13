@@ -74,7 +74,7 @@ function mainRender(eventInfo: EventInfo) {
 		const {currentY} = eventInfo;
 		const y = -currentY / canvasWidth;
 		const r = canvasHeight / canvasWidth;
-		document.getElementById("devicePixelRatio").innerText = "currentY:" + currentY.toFixed(2) + "\nk * " + (y).toFixed(2) + "\n" + (r).toFixed(2) + "\n头部：" + (r + y).toFixed(2) + "\n";
+		document.getElementById("devicePixelRatio").innerText = "currentY:" + currentY + "\nk * " + (y).toFixed(2) + "\n" + (r).toFixed(2) + "\n头部：" + (r + y).toFixed(2) + "\n";
 		//		"底部" + (y + r + r).toFixed(2);
 		const {width} = $cacheCanvas;
 		$cacheCanvas.width = width;

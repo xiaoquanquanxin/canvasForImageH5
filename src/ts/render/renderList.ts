@@ -1,14 +1,16 @@
 import {canvasHeight, canvasWidth, mainRatio} from "@ts/data/device";
 import {cacheCtx} from "@ts/data/canvas";
 import {
+	calcBasicRenderData,
 	getInflectionRenderBasicParams,
-	getRenderBasicParams, getValueInRange,
+	getRenderBasicParams,
+	getValueInRange,
 	hasInflectionMove,
 	linearMove,
-	linearMoveWithTimeout, rotateOnly,
+	linearMoveWithTimeout,
+	rotateOnly,
 } from "@ts/utils/utils";
 import {ImgItem} from "@ts/interface/interface";
-import dragonfly from "@img/section04/dragonfly.png";
 
 //	画背景
 export function renderCover(currentY: number, imgItem: ImgItem) {
@@ -73,11 +75,12 @@ export function renderYear(currentY: number, imgItem: ImgItem) {
 	}
 	const total = 62;
 	//	特殊处理
-	let i = ((canvasHeight - dy) / total * 6) | 0;
-	i = getValueInRange(0, i, total - 1);
+	let i = (canvasHeight - dy) / total * 6;
+	i = getValueInRange(0, i, total - 1) | 0;
+	const {sx, sw, dw, dh} = calcBasicRenderData(width, i, total, rw, rh);
 	cacheCtx.drawImage(img,
-		width * i / total, 0, width / total, height,
-		dx, dy, canvasWidth * rw / total, canvasWidth * rh,
+		sx, 0, sw, height,
+		dx, dy, dw, dh,
 	);
 }
 
@@ -171,14 +174,17 @@ export function renderDoor(currentY: number, imgItem: ImgItem) {
 		if (inflexionPoint + .2 * 750 > -currentY) {
 			return 0;
 		} else if (inflexionPoint + .4 * 750 > -currentY) {
-			return width / 3;
+			return (width / 3) | 0;
 		} else {
-			return width * 2 / 3;
+			return (width * 2 / 3) | 0;
 		}
 	})();
+	const sw = (width / 3) | 0;
+	const dw = (canvasWidth * rw / 3) | 0;
+	const dh = (canvasWidth * rh) | 0;
 	cacheCtx.drawImage(img,
-		sx, 0, width / 3, height,
-		dx, dy, canvasWidth * rw / 3, canvasWidth * rh,
+		sx, 0, sw, height,
+		dx, dy, dw, dh,
 	);
 }
 
@@ -190,11 +196,12 @@ export function renderYear1959(currentY: number, imgItem: ImgItem) {
 	}
 	const total = 62;
 	//	特殊处理
-	let i = (dy / total * 6) | 0;
-	i = getValueInRange(0, i, total - 1);
+	let i = dy / total * 6;
+	i = getValueInRange(0, i, total - 1) | 0;
+	const {sx, sw, dw, dh} = calcBasicRenderData(width, i, total, rw, rh);
 	cacheCtx.drawImage(img,
-		width * i / total, 0, width / total, height,
-		dx, dy, canvasWidth * rw / total, canvasWidth * rh,
+		sx, 0, sw, height,
+		dx, dy, dw, dh,
 	);
 }
 
@@ -223,9 +230,10 @@ export function renderMushroom(currentY: number, imgItem: ImgItem) {
 	i = getValueInRange(0, i, total - 1);
 	//	不透明度
 	cacheCtx.globalAlpha = Math.max((750 * 15.3 + currentY) / 300, 0);
+	const {sx, sw, dw, dh} = calcBasicRenderData(width, i, total, rw, rh);
 	cacheCtx.drawImage(img,
-		width * i / total, 0, width / total, height,
-		dx, dy, canvasWidth * rw / total, canvasWidth * rh,
+		sx, 0, sw, height,
+		dx, dy, dw, dh,
 	);
 	cacheCtx.globalAlpha = 1;
 }
@@ -238,11 +246,12 @@ export function renderSatellite(currentY: number, imgItem: ImgItem) {
 	}
 	const total = 48;
 	//	特殊处理
-	let i = (-(750 * 13 + currentY) / total * 1.5) | 0;
-	i = getValueInRange(0, i, total - 1);
+	let i = -(750 * 13 + currentY) / total * 1.5;
+	i = getValueInRange(0, i, total - 1) | 0;
+	const {sx, sw, dw, dh} = calcBasicRenderData(width, i, total, rw, rh);
 	cacheCtx.drawImage(img,
-		width * i / total, 0, width / total, height,
-		dx, dy, canvasWidth * rw / total, canvasWidth * rh,
+		sx, 0, sw, height,
+		dx, dy, dw, dh,
 	);
 }
 
@@ -295,8 +304,9 @@ export function renderYear1979(currentY: number, imgItem: ImgItem) {
 	//	特殊处理
 	let i = (-(countingStartY + currentY) / total * 6) | 0;
 	i = getValueInRange(0, i, total - 1);
+	const {sx, sw, dw, dh} = calcBasicRenderData(width, i, total, rw, rh);
 	cacheCtx.drawImage(img,
-		width * i / total, 0, width / total, height,
-		dx, dy, canvasWidth * rw / total, canvasWidth * rh,
+		sx, 0, sw, height,
+		dx, dy, dw, dh,
 	);
 }
